@@ -10,7 +10,7 @@ desc: >-
   Graph2Eval turns documents and web pages into a knowledge-graph task space for
   scalable, controllable evaluation of RAG and web agents.
 featured: true
-image: /blog-assets/graph2eval-cvpr-2026/graph2eval.png
+image: /blog-assets/graph2eval-cvpr-2026/graph2eval.webp
 imageAlt: Graph2Eval knowledge-graph task generation overview
 links:
   - label: Blog

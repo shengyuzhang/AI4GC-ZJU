@@ -3567,6 +3567,33 @@ article.member-card.member-card--has-profile {
   font-size: var(--text-base);
 }
 
+/* Keyboard skip-to-content link (visible only on focus) */
+.main-region {
+  display: contents;
+}
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 1000;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  background: var(--color-brand);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform var(--duration-fast) var(--ease-smooth);
+}
+
+.skip-link:focus-visible,
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
 /* Current-year sub-sections (Published / Preprints) */
 .publication-subgroup + .publication-subgroup {
   margin-top: var(--space-6);

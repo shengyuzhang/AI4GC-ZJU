@@ -365,7 +365,7 @@ export const siteConfigSchema = z.object({
   url: z.string().default(""),
   /** When true, search engines may index the site (robots + page meta). Keep false until launch. */
   indexable: z.boolean().default(false),
-  logo: z.string().default("/content-assets/ai4gclab/logo.jpg"),
+  logo: z.string().default("/content-assets/ai4gclab/AI4GC.png"),
   schoolLogo: z.string().optional(),
   schoolName: z.string().default("Zhejiang University"),
   schoolHref: z.string().default("https://www.zju.edu.cn/english/"),

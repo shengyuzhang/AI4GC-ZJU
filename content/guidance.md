@@ -96,7 +96,7 @@ content/
 
 静态资源：
 
-- 站点级：`content/assets/`（URL 以 `/content-assets/` 开头，如 `/content-assets/ai4gclab/logo.jpg`）
+- 站点级：`content/assets/`（URL 以 `/content-assets/` 开头，如 `/content-assets/ai4gclab/AI4GC.png`）
 - 成员级：放在 `content/team/{group}/{member-folder}/` 下，在 frontmatter 或 Markdown 中用相对路径（如 `photo.jpeg`），运行时映射为 `/team-assets/{group}/{member-folder}/photo.jpeg`
 - 博客级：放在 `content/blog/{post-folder}/` 下，在 Markdown 中用相对路径，运行时映射为 `/blog-assets/{post-folder}/...`
 - `content/guidance.md` 是 Admin 默认打开的内容手册，只用于编辑说明，不作为公开页面展示。
@@ -153,7 +153,7 @@ Slug 逻辑：`src/lib/content/slug.ts`。
 | `name`                 | string        | `AI4GC Lab`                         | 站点名称                                         |
 | `tagline`              | string        | —                                   | 标语                                           |
 | `description`          | string        | —                                   | SEO / metadata                               |
-| `logo`                 | string        | `/content-assets/ai4gclab/logo.jpg` | 导航 Logo                                      |
+| `logo`                 | string        | `/content-assets/ai4gclab/AI4GC.png` | 导航 Logo                                      |
 | `schoolLogo`           | string        | —                                   | 学校 Logo（导航旁）                                 |
 | `schoolName`           | string        | `Zhejiang University`               | 学校名称                                         |
 | `schoolHref`           | string        | ZJU 英文站 URL                         | 学校链接                                         |

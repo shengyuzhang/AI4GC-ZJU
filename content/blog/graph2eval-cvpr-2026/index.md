@@ -48,7 +48,7 @@ Graph2Eval treats the KG as a **latent task space**. The pipeline has five stage
 4. **Task generation** — compose executable task instances with LLM-assisted context engineering.
 5. **Coverage optimization** — filter tasks with reachability checks, LLM scoring, and similarity analysis.
 
-![Graph2Eval workflow: document and web parsing, knowledge-graph construction, subgraph sampling, task generation, and coverage optimization.](graph2eval.png)
+![Graph2Eval workflow: document and web parsing, knowledge-graph construction, subgraph sampling, task generation, and coverage optimization.](graph2eval.webp)
 
 This design supports both **RAG agent** scenarios (multimodal document understanding) and **web agent** scenarios (multi-step interaction on realistic pages).
 

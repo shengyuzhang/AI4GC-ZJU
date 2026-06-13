@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import { IBM_Plex_Mono, Source_Sans_3, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
@@ -40,6 +40,12 @@ export function generateMetadata(): Metadata {
     description: site.description,
     icons: {
       icon: site.favicon,
+      apple: site.logo,
+    },
+    appleWebApp: {
+      capable: true,
+      title: site.name,
+      statusBarStyle: "default",
     },
     alternates: {
       canonical: "/",
@@ -70,6 +76,10 @@ export function generateMetadata(): Metadata {
         },
   };
 }
+
+export const viewport: Viewport = {
+  themeColor: "#343f87",
+};
 
 export default async function RootLayout({
   children,
@@ -108,6 +118,11 @@ export default async function RootLayout({
       >
         {!isAdminRoute ? <JsonLd data={organizationJsonLd} /> : null}
         {!isAdminRoute ? (
+          <a href="#main-content" className="skip-link">
+            Skip to main content
+          </a>
+        ) : null}
+        {!isAdminRoute ? (
           <Navbar
             name={site.name}
             logo={site.logo}
@@ -117,7 +132,9 @@ export default async function RootLayout({
             nav={site.nav}
           />
         ) : null}
-        {children}
+        <div id="main-content" tabIndex={-1} className="main-region">
+          {children}
+        </div>
         {!isAdminRoute ? (
           <SiteFooter
             name={site.name}
