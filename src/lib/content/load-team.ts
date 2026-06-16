@@ -32,9 +32,17 @@ type LoadedMemberFile = {
 // Member folder -> repo add order (≈ PR submission order). See member-order.json.
 const MEMBER_ADD_ORDER = memberOrderJson as Record<string, number>;
 
+// Placeholder/template profiles (folder name starts with "template-") always
+// sort to the end of their group, after all real members.
+const isTemplateFolder = (folder: string): boolean => folder.startsWith("template-");
+
 function sortMemberEntries(entries: { folder: string; member: TeamMember }[]): TeamMember[] {
   return [...entries]
     .sort((a, b) => {
+      const templateA = isTemplateFolder(a.folder) ? 1 : 0;
+      const templateB = isTemplateFolder(b.folder) ? 1 : 0;
+      if (templateA !== templateB) return templateA - templateB;
+
       const dateA = parseMemberStartDate(a.member.startDate ?? "");
       const dateB = parseMemberStartDate(b.member.startDate ?? "");
       if (dateA !== dateB) return dateA - dateB;

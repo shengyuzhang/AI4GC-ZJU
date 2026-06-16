@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import SiteFooter from "@/components/site/SiteFooter";
@@ -147,6 +148,10 @@ export default async function RootLayout({
             footer={site.footer}
           />
         ) : null}
+        {/* Vercel Web Analytics — cookieless page-view tracking on public pages.
+            Script + beacon are same-origin (/_vercel/insights/*), so the CSP
+            (script-src 'self', connect-src 'self') already allows it. */}
+        {!isAdminRoute ? <Analytics /> : null}
       </body>
     </html>
   );

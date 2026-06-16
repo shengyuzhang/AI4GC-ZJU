@@ -557,7 +557,7 @@ links:
 | `email`          | 可选  | 可选  | 联系邮箱；个人页 Hero（tags 下方）与 `/team` 卡片头部（姓名/meta 下方）单独展示。`links` 中遗留的 `mailto:` 构建时自动提取                                                   |
 
 
-组内排序：`startDate`（入组/入学时间）升序；**同一时间时，先提交 PR（最早被加入仓库）的成员排在前面**（按 git 添加顺序）。如需手动指定，可在 frontmatter 写 `order`（数值越小越靠前，优先级高于 PR 顺序）。
+组内排序：`startDate`（入组/入学时间）升序；**同一时间时，先提交 PR（最早被加入仓库）的成员排在前面**（按 git 添加顺序）。如需手动指定，可在 frontmatter 写 `order`（数值越小越靠前，优先级高于 PR 顺序）。**模板/占位主页（文件夹名以 `template-` 开头）始终排在本组最后。**
 
 个人页 Hero：**PI**（`content/team/pi/`）为居中头像 + 姓名 + `degree`；可选 `heroBackground` 背景图，否则默认渐变；正文区域水平居中、文本左对齐。**Member** 为 compact 头像 Hero + 实验室 kicker（Hero **不**显示 `degree`）。`tags` / `email` / `links` 在 Hero 中展示。`bio` 用于 SEO、团队卡片及无 Markdown 时的 fallback。
 

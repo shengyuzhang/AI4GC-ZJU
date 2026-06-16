@@ -1,17 +1,23 @@
 type: projects
 title: Projects
 items:
-  - id: infigui-agent
-    name: InfiGUIAgent
+  - id: infigui-series
+    name: InfiGUI Series
     period: 2024–present
     image: infigui-agent.svg
-    imageAlt: InfiGUIAgent interface preview
-    desc: A family of GUI agents for computer-use tasks, with efficient fine-tuning and deployment-oriented model design.
+    imageAlt: InfiGUI series GUI agents
+    desc: >-
+      A family of compact GUI agents for computer use, evolving across three works:
+      InfiGUIAgent — a multimodal generalist agent with native reasoning and reflection;
+      InfiGUI-R1 — from reactive actors to deliberative reasoners via reinforcement learning;
+      InfiGUI-G1 — stronger GUI grounding through adaptive exploration policy optimization.
     tags:
-      - Agents
+      - GUI Agents
       - Multimodal
     links:
-      - label: Project
+      - label: InfiGUIAgent
         href: https://github.com/InfiXAI/InfiGUIAgent
       - label: InfiGUI-R1
         href: https://github.com/InfiXAI/InfiGUI-R1
+      - label: InfiGUI-G1
+        href: https://github.com/InfiXAI/InfiGUI-G1
