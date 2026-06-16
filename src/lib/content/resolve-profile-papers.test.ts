@@ -146,7 +146,6 @@ const sampleChannel = {
   label: "Yurun Chen",
   href: "https://www.xiaohongshu.com/user/profile/abc",
   platform: "xiaohongshu" as const,
-  platformLabel: "小红书",
   desc: "Notes",
 };
 
@@ -208,5 +207,29 @@ describe("attachProfileBlogPosts", () => {
     );
 
     expect(segments).toEqual([{ kind: "markdown", content: "Intro" }]);
+  });
+
+  it("merges duplicate @blog placeholders into one section", () => {
+    const segments = attachProfileBlogPosts(
+      [
+        { kind: "markdown", content: "Intro" },
+        { kind: "blog", title: "Lab Notes", channels: [], posts: [] },
+        { kind: "papers", title: "Selected Papers", publications: [] },
+        { kind: "blog", title: "Ignored duplicate", channels: [], posts: [] },
+      ],
+      [samplePost],
+      [sampleChannel],
+    );
+
+    expect(segments).toEqual([
+      { kind: "markdown", content: "Intro" },
+      {
+        kind: "blog",
+        title: "Lab Notes",
+        channels: [sampleChannel],
+        posts: [samplePost],
+      },
+      { kind: "papers", title: "Selected Papers", publications: [] },
+    ]);
   });
 });

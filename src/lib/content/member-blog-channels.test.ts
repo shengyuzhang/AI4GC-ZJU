@@ -14,6 +14,15 @@ describe("inferBlogChannelPlatform", () => {
   it("detects WeChat URLs", () => {
     expect(inferBlogChannelPlatform("https://mp.weixin.qq.com/mp/appmsgshow")).toBe("wechat");
   });
+
+  it("detects X URLs", () => {
+    expect(inferBlogChannelPlatform("https://x.com/YRChen_AIsafety")).toBe("x");
+    expect(
+      inferBlogChannelPlatform(
+        "https://x.com/intent/follow?screen_name=YRChen_AIsafety",
+      ),
+    ).toBe("x");
+  });
 });
 
 describe("extractBlogChannels", () => {
@@ -37,14 +46,12 @@ describe("extractBlogChannels", () => {
         label: "AI4GC Lab",
         href: "https://mp.weixin.qq.com/s/example",
         platform: "wechat",
-        platformLabel: "微信公众号",
         desc: undefined,
       },
       {
         label: "Yurun Chen",
         href: "https://www.xiaohongshu.com/user/profile/abc",
         platform: "xiaohongshu",
-        platformLabel: "小红书",
         desc: "Notes",
       },
     ]);
@@ -56,6 +63,6 @@ describe("extractBlogChannels", () => {
         [{ label: "Blog", href: "https://example.com", kind: "blog-channel" }],
         pathLabel,
       ),
-    ).toThrow(/recognizable WeChat or Xiaohongshu URL/i);
+    ).toThrow(/recognizable WeChat, X, or Xiaohongshu URL/i);
   });
 });

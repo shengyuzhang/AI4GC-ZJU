@@ -445,7 +445,7 @@ links:
 
 `/blog` 列表按 `site.yaml` → `blogPageVisibleCount` 分页，底部 Previous / Next 切换页码；排序可在页内切换 Newest / Oldest first（与 `/news` 相同交互）。
 
-设置了 `authorId` / `authorIds` 的文章会自动出现在对应成员个人页底部的 **Blog** 区块（按 `date` 降序）。这里的 author id / author_id 就是成员 profile URL 使用的文件夹名，默认格式为 `姓名-slug-入学年份-学号/工号`；PI 可使用姓名 slug（如 `shengyu-zhang`）。实际 YAML 字段名仍为 `authorId` / `authorIds`。详情页作者名在成员已发布个人页（`profile: true`）时可点击跳转到 `/{成员文件夹名}`。
+设置了 `authorId` / `authorIds` 的文章会自动出现在对应成员个人页 `## @blog` 区块的 **On-site** 分组（按 `date` 降序）。须同时在该成员 `index.md` 正文中写 `## @blog …`，否则不会显示。author id 即成员 profile 文件夹名，默认格式为 `姓名-slug-入学年份-学号/工号`；PI 可使用姓名 slug（如 `shengyu-zhang`）。详情页作者名在成员已发布个人页（`profile: true`）时可点击跳转到 `/{成员文件夹名}`。
 
 ---
 
@@ -566,7 +566,7 @@ links:
 继承 `LinkItem`，增加 `kind`。Profile 中也区分 **action** 和 **channel**：
 
 - Profile actions：`profile` / `social` / `website`，显示在个人页 Hero 或团队卡片的行动链接中。
-- Publishing channels：`blog-channel`，只显示在个人页 Blog 区块，用于公众号、小红书等内容分发渠道。
+- Publishing channels：`blog-channel`，只显示在个人页 Blog 区块，用于公众号、X、小红书等内容分发渠道。
 
 
 | `kind`         | 说明                                              |
@@ -574,7 +574,7 @@ links:
 | `profile`      | 个人主页                                            |
 | `social`       | 社交 / 学术                                         |
 | `website`      | 个人网站                                            |
-| `blog-channel` | 个人页 **Blog** 区块的外链渠道（微信公众号、小红书等）；**不**在 Hero 展示 |
+| `blog-channel` | 个人页 **Blog** 区块的外链渠道（微信公众号、X、小红书等）；**不**在 Hero 展示 |
 
 
 `blog-channel` 可选字段：
@@ -582,7 +582,7 @@ links:
 
 | 字段     | 说明                                                                    |
 | ------ | --------------------------------------------------------------------- |
-| `desc` | 卡片上一行说明，如「论文解读与科研日常」。渠道类型由 `href` 自动识别（微信公众号 / 小红书域名），无需填写 `platform` |
+| `desc` | 渠道卡片上的**小字说明**（显示在 `label` 标题下方）。平台类型由 `href` 域名自动识别（`mp.weixin.qq.com` → 微信公众号，`x.com` / `twitter.com` → X，`xiaohongshu.com` → 小红书），无需填写 `platform` |
 
 
 ```yaml
@@ -597,7 +597,7 @@ links:
     desc: Long-form lab updates on WeChat.
 ```
 
-`profile: true` 时，`/team` 卡片上点击**头像**或**姓名**进入 `/{成员文件夹名}`；不再自动插入 `Profile` 链接芯片。`blog-channel` 链接仅在个人页 Blog 区块以卡片展示；若同时有 `authorId` 关联的站内文章，卡片下方追加 **Lab notes** 列表。
+`profile: true` 时，`/team` 卡片上点击**头像**或**姓名**进入 `/{成员文件夹名}`；不再自动插入 `Profile` 链接芯片。`blog-channel` 链接**仅**在个人页 `## @blog` 区块的 **External**（站外）分组展示；`authorId` / `authorIds` 关联的站内文章出现在 **On-site**（站内）分组。GitHub / Scholar 等社交链接写在普通 `links`（不设 `blog-channel`），显示在 Hero 与团队卡片。X、小红书等若同时作为内容渠道，可额外用 `blog-channel` 挂在 **External** 分组（通常不再在 Hero 重复同一主页链接）。
 
 `/team` 的 openings、sponsors 来自 `site.yaml` → `team.openings`、`team.sponsors`。
 
@@ -613,10 +613,21 @@ links:
 | 类型     | 声明示例                         | 格式                                             |
 | ------ | ---------------------------- | ---------------------------------------------- |
 | Papers | `## @papers Selected Papers` | 见下文                                            |
-| Blog   | `## @blog Lab Notes`         | 自动聚合 `authorId` / `authorIds` 指向该成员的文章；无文章时不渲染 |
+| Blog   | `## @blog Lab Notes`         | 见下文「`@blog` 区块」；须写 `@blog` 前缀才会渲染 |
 
 
 `@papers` / `@blog` 前缀会在渲染时去掉；若省略自定义标题，分别使用 `Selected Papers` / `Blog`。普通 `## Selected Papers` 或 `## Blog` 不会触发结构化解析，必须写 `@papers` / `@blog`。
+
+#### `@blog` 区块
+
+个人页正文须包含 `## @blog …`（如 `## @blog Lab Notes`）。`Lab Notes` 仅为区块标题，不是第二个 magic 前缀。
+
+| 内容来源 | frontmatter / 站点 | 页面分组 | 说明 |
+| -------- | ------------------ | -------- | ---- |
+| 站外渠道 | `links` 中 `kind: blog-channel` | **External** | 微信公众号、X、小红书主页等；`label` 为卡片标题，`desc` 为标题下方小字说明 |
+| 站内文章 | `/blog/{post}/index.md` 的 `authorId` / `authorIds` | **On-site** | 按 `date` 降序；标题链到 `/blog/{post}` |
+
+若两类内容皆无，整个 `@blog` 区块不渲染（即使写了 `## @blog` 标题）。
 
 #### Papers：BibTeX 引用（唯一支持方式）
 
@@ -710,6 +721,8 @@ content/home/modules/lab-partners/
 | 博客详情路由               | `src/app/blog/[slug]/page.tsx`                                                                                       |
 | 博客资源路由               | `src/app/blog-assets/[...path]/route.ts`                                                                             |
 | 个人页路由与布局             | `src/app/[slug]/page.tsx`、`src/components/profile/ProfilePageContent.tsx`、`src/components/profile/PiProfileHero.tsx` |
+| 个人页 `@blog` 区块 UI     | `src/components/profile/ProfileBlogPosts.tsx`（External / On-site 分组）                                                  |
+| Publications 年份筛选    | `src/components/publications/PublicationsPageClient.tsx`                                                             |
 | Venue 规范化（arXiv 等）   | `src/lib/publications-utils.ts`、`src/lib/content/bib-publications.ts`                                                |
 | `/team` 卡片入学/入职前缀    | `src/lib/content/constants.ts` → `TEAM_MEMBER_START_LABELS`；`src/lib/content/slug.ts` → `formatMemberStartMeta`      |
 | 安全响应头                | `src/lib/security/headers.ts`、`next.config.ts`                                                                       |

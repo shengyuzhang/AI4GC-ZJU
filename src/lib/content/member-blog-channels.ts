@@ -1,7 +1,4 @@
-import {
-  BLOG_CHANNEL_PLATFORM_LABELS,
-  BLOG_CHANNEL_PLATFORM_ORDER,
-} from "@/lib/content/constants";
+import { BLOG_CHANNEL_PLATFORM_ORDER } from "@/lib/content/constants";
 import type { BlogChannel, BlogChannelPlatform, MemberLink } from "@/types/lab";
 
 export function inferBlogChannelPlatform(href: string): BlogChannelPlatform | null {
@@ -12,6 +9,14 @@ export function inferBlogChannelPlatform(href: string): BlogChannelPlatform | nu
 
   if (lower.includes("weixin.qq.com") || lower.includes("mp.weixin.qq.com")) {
     return "wechat";
+  }
+
+  if (
+    lower.includes("x.com")
+    || lower.includes("twitter.com")
+    || lower.includes("screen_name=")
+  ) {
+    return "x";
   }
 
   return null;
@@ -27,23 +32,19 @@ export function resolveBlogChannelPlatform(
   }
 
   throw new Error(
-    `Blog channel "${link.label}" in ${pathLabel} needs a recognizable WeChat or Xiaohongshu URL.`,
+    `Blog channel "${link.label}" in ${pathLabel} needs a recognizable WeChat, X, or Xiaohongshu URL.`,
   );
 }
 
 export function extractBlogChannels(links: MemberLink[], pathLabel: string): BlogChannel[] {
   return links
     .filter((link) => link.kind === "blog-channel")
-    .map((link) => {
-      const platform = resolveBlogChannelPlatform(link, pathLabel);
-      return {
-        label: link.label,
-        href: link.href,
-        platform,
-        platformLabel: BLOG_CHANNEL_PLATFORM_LABELS[platform],
-        desc: link.desc,
-      };
-    })
+    .map((link) => ({
+      label: link.label,
+      href: link.href,
+      platform: resolveBlogChannelPlatform(link, pathLabel),
+      desc: link.desc,
+    }))
     .sort((a, b) => BLOG_CHANNEL_PLATFORM_ORDER[a.platform] - BLOG_CHANNEL_PLATFORM_ORDER[b.platform]);
 }
 
@@ -55,19 +56,4 @@ export function filterHeroMemberLinks(links: MemberLink[]): MemberLink[] {
 /** Links shown on /team cards (profile entry is avatar/name, not a chip). */
 export function filterTeamCardMemberLinks(links: MemberLink[]): MemberLink[] {
   return links.filter((link) => link.kind !== "blog-channel" && link.kind !== "profile");
-}
-
-export function toBlogChannel(channel: {
-  platform: BlogChannelPlatform;
-  label: string;
-  href: string;
-  desc?: string;
-}): BlogChannel {
-  return {
-    label: channel.label,
-    href: channel.href,
-    platform: channel.platform,
-    platformLabel: BLOG_CHANNEL_PLATFORM_LABELS[channel.platform],
-    desc: channel.desc,
-  };
 }

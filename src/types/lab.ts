@@ -4,13 +4,12 @@ export type LinkItem = {
   external?: boolean;
 };
 
-export type BlogChannelPlatform = "wechat" | "xiaohongshu";
+export type BlogChannelPlatform = "wechat" | "x" | "xiaohongshu";
 
 export type BlogChannel = {
   label: string;
   href: string;
   platform: BlogChannelPlatform;
-  platformLabel: string;
   desc?: string;
 };
 

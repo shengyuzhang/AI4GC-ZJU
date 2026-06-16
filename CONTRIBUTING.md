@@ -50,7 +50,10 @@ npm run check   # 提交前自检
 ### 1. 个人主页，并关联自己的 Blog
 - 在 `content/team/{分组}/{你的文件夹}/index.md` 新建/完善个人页（照片放同文件夹，`profile: true` 才会发布）。
 - 文件夹命名、字段（`name`/`startDate`/`tags`/`email`/`bio` 等）见 guidance「成员与个人主页」一节。
-- 在博客文章的 frontmatter 里写 `authorId` 指向你的成员文件夹 id，你的个人页就会自动列出你的博客。
+- 个人页正文加 `## @blog Lab Notes`（或自定义标题），才会显示 Blog 区块。
+- 站外渠道（小红书、公众号、X 等长期主页）写在 frontmatter `links` 里并设 `kind: blog-channel` + `desc`（小字说明），显示在 **External** 分组；同一主页不必再在 Hero 重复一条普通 `links`。
+- GitHub / Scholar 等写在普通 `links`（不设 `blog-channel`），显示在页面顶部 Hero。
+- 在博客文章的 frontmatter 里写 `authorId` 指向你的成员文件夹 id，文章会出现在个人页 **On-site** 分组。
 
 ### 2. Blog：补齐**所有一作文章**的内容，并关联微信公众号 / 小红书
 - 每篇一作论文对应建一篇 `content/blog/{文章文件夹}/index.md`（封面、配图放同文件夹）。

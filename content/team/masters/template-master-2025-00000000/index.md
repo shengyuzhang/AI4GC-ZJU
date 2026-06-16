@@ -40,7 +40,7 @@ links:
   - 结构化版块只支持 `## @papers` 和 `## @blog`，其它 `## 小节` 会按普通 Markdown 渲染。
   - @papers：列出 BibTeX cite key；`@bib publications` 表示引用全局 content/publications.bib，
     也可在本文件夹放 papers.bib 后改用 `@bib papers.bib`。可选荣誉标注：`- citekey | Oral`。
-  - @blog：自动聚合 `authorId` 指向你的博客文章；frontmatter 里 `kind: blog-channel` 的链接会作为渠道卡片显示在此。
+  - @blog：正文写 `## @blog Lab Notes`；`kind: blog-channel` 的链接显示在 **External**（站外）分组；`authorId` 关联的站内文章显示在 **On-site**（站内）分组。
 -->
 
 ## About Me

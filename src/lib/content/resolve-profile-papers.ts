@@ -105,15 +105,38 @@ export function attachProfileBlogPosts(
     return segments.filter((segment) => segment.kind !== "blog");
   }
 
-  const blogIndex = segments.findIndex((segment) => segment.kind === "blog");
-  if (blogIndex >= 0) {
-    const updated = [...segments];
-    const existing = updated[blogIndex] as ProfileBlogSegment;
-    updated[blogIndex] = { ...existing, channels, posts };
-    return updated;
+  let blogTitle = "Blog";
+  let insertAt = -1;
+  const nonBlog: ProfileBodySegment[] = [];
+
+  for (const segment of segments) {
+    if (segment.kind === "blog") {
+      if (insertAt < 0) {
+        blogTitle = segment.title;
+        insertAt = nonBlog.length;
+      }
+      continue;
+    }
+
+    nonBlog.push(segment);
   }
 
-  return [...segments, { kind: "blog", title: "Blog", channels, posts }];
+  const blogSegment: ProfileBlogSegment = {
+    kind: "blog",
+    title: blogTitle,
+    channels,
+    posts,
+  };
+
+  if (insertAt >= 0) {
+    return [
+      ...nonBlog.slice(0, insertAt),
+      blogSegment,
+      ...nonBlog.slice(insertAt),
+    ];
+  }
+
+  return [...nonBlog, blogSegment];
 }
 
 export function parseBulletLines(body: string): string[] {
