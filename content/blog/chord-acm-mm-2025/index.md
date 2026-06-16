@@ -14,7 +14,7 @@ tags:
   - Recommender Systems
   - Device-Cloud Collaboration
   - Mixed-precision Quantization
-  - On-device Deployment
+  - Model Customization
 ---
 We are happy to share that **CHORD** has been accepted to **ACM MM 2025**. CHORD studies how to give each user a personalized recommendation model that runs **on their own device**, without training or fine-tuning a separate model per user.
 
