@@ -6,12 +6,23 @@ describe("getSecurityHeaders", () => {
     vi.unstubAllEnvs();
   });
 
-  it("includes crawler and clickjacking protections in all environments", () => {
+  it("includes clickjacking protections in all environments", () => {
     const keys = getSecurityHeaders().map((header) => header.key);
 
-    expect(keys).toContain("X-Robots-Tag");
     expect(keys).toContain("X-Frame-Options");
     expect(keys).toContain("X-Content-Type-Options");
+  });
+
+  it("sends X-Robots-Tag noindex only when the site is not indexable", () => {
+    const blocked = getSecurityHeaders({ indexable: false });
+    expect(blocked.find((h) => h.key === "X-Robots-Tag")?.value).toContain("noindex");
+
+    // Default (no option) is treated as not-indexable → still blocked.
+    expect(getSecurityHeaders().map((h) => h.key)).toContain("X-Robots-Tag");
+
+    // When indexing is enabled, the header must be absent so search engines can index.
+    const indexable = getSecurityHeaders({ indexable: true });
+    expect(indexable.map((h) => h.key)).not.toContain("X-Robots-Tag");
   });
 
   it("adds HSTS and CSP only in production", () => {
