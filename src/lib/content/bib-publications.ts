@@ -113,6 +113,21 @@ function extractPublicationLinks(fields: Record<string, unknown>): LinkItem[] {
     links.push({ label: "Project", href: github, external: true });
   }
 
+  const huggingFace = firstNonEmptyField(fields, ["huggingface", "hf"]);
+  if (huggingFace) {
+    links.push({ label: "Hugging Face", href: huggingFace, external: true });
+  }
+
+  const zhihu = firstNonEmptyField(fields, ["zhihu", "zhihuurl"]);
+  if (zhihu) {
+    links.push({ label: "Zhihu", href: zhihu, external: true });
+  }
+
+  const wechat = firstNonEmptyField(fields, ["wechat", "weixin", "wechaturl"]);
+  if (wechat) {
+    links.push({ label: "WeChat", href: wechat, external: true });
+  }
+
   const blogHref = extractBlogHref(fields);
   if (blogHref) {
     links.push({ label: "Blog", href: blogHref, external: /^https?:\/\//i.test(blogHref) });
