@@ -26,14 +26,8 @@ export const TEAM_GROUP_LABELS: Record<TeamGroup, string> = {
   alumni: "Graduated",
 };
 
-export const BLOG_CHANNEL_PLATFORMS = ["wechat", "xiaohongshu"] as const satisfies readonly BlogChannelPlatform[];
-
 export const BLOG_CHANNEL_PLATFORM_ORDER: Record<BlogChannelPlatform, number> = {
   wechat: 0,
-  xiaohongshu: 1,
-};
-
-export const BLOG_CHANNEL_PLATFORM_LABELS: Record<BlogChannelPlatform, string> = {
-  wechat: "微信公众号",
-  xiaohongshu: "小红书",
+  x: 1,
+  xiaohongshu: 2,
 };

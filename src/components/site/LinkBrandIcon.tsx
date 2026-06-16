@@ -1,4 +1,11 @@
-export type LinkPlatform = "scholar" | "github" | "dblp" | "linkedin" | "homepage";
+export type LinkPlatform =
+  | "scholar"
+  | "github"
+  | "dblp"
+  | "linkedin"
+  | "x"
+  | "xiaohongshu"
+  | "homepage";
 
 /** Detects a known profile-link platform from its label or href. */
 export function detectLinkPlatform(label: string, href: string): LinkPlatform | null {
@@ -9,7 +16,30 @@ export function detectLinkPlatform(label: string, href: string): LinkPlatform | 
   if (h.includes("github.com") || l === "github") return "github";
   if (h.includes("dblp.org") || h.includes("dblp.uni") || l.includes("dblp")) return "dblp";
   if (h.includes("linkedin.com") || l.includes("linkedin")) return "linkedin";
-  if (l.includes("homepage") || l.includes("website") || l.includes("personal") || l.includes("home page")) {
+  if (
+    h.includes("x.com")
+    || h.includes("twitter.com")
+    || h.includes("screen_name=")
+    || l === "x"
+    || l.startsWith("x ")
+    || /\btwitter\b/i.test(label)
+  ) {
+    return "x";
+  }
+  if (
+    h.includes("xiaohongshu.com")
+    || l.includes("xiaohongshu")
+    || l.includes("rednote")
+    || label.includes("小红书")
+  ) {
+    return "xiaohongshu";
+  }
+  if (
+    /\bhomepage\b/i.test(label)
+    || /\bwebsite\b/i.test(label)
+    || /\bpersonal\b/i.test(label)
+    || /\bhome\s+page\b/i.test(label)
+  ) {
     return "homepage";
   }
   return null;
@@ -67,6 +97,19 @@ export default function LinkBrandIcon({ label, href }: LinkBrandIconProps) {
           <path d="M8.5 4v16" />
           <path d="m13 5 4.4 15" />
           <rect x="2.5" y="4" width="2" height="16" rx="0.5" />
+        </svg>
+      );
+    case "x":
+      return (
+        <svg width={16} height={16} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+      );
+    case "xiaohongshu":
+      return (
+        <svg {...stroke}>
+          <path d="M5 4h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-7l-4 3v-3H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" />
+          <path d="M8 9.5v4M16 9.5v4M12 8.5l-1.5 5M12 8.5l1.5 5" />
         </svg>
       );
     case "homepage":

@@ -101,7 +101,7 @@ There is no `content/pages/` directory. Profile pages are the Markdown body in e
 - `/team` cards prefix `startDate` by group: **Enrolled** (phds/masters/undergrads/alumni), **Joined** (postdocs). Labels in `src/lib/content/constants.ts` → `TEAM_MEMBER_START_LABELS`.
 - Homepage hero optional `brandMark` (prefer `/content-assets/...`) shown on the right of `content/home/hero.yaml`.
 - BibTeX arXiv entries: use `journal={arXiv}` — build normalizes long `arXiv preprint arXiv:…` strings to display as `arXiv · {year}` on profile/publication lists.
-- Profile body structured sections only support `@papers` (member-local `papers.bib` + cite keys) and `@blog`. Put other narrative content in the intro body. See `content/guidance.md`.
+- Profile `@blog` section (`## @blog …` in member `index.md`): **External** group lists `kind: blog-channel` links (WeChat, X, Xiaohongshu, etc.) as `label` + optional `desc` cards; **On-site** group lists `/blog/…` posts whose `authorId` / `authorIds` point at the member. The whole section is omitted when both groups would be empty. GitHub / Scholar 等写在普通 `links`（无 `blog-channel`），显示在 Hero。内容渠道主页用 `blog-channel` 挂在 **External**，避免与 Hero 重复同一 URL。
 - Blog posts: optional frontmatter `links` array renders a prominent resource-button row (kinds: `paper`/`code`/`xiaohongshu`/`wechat`/`website`) injected after the intro, before the first `##` heading (`src/components/blog/BlogResourceLinks.tsx`, resolved in `src/lib/content/blog-links.ts`). Prose/“Further reading” links still live in the Markdown body. No auto-generated References block.
 
 ## Key code paths
@@ -120,7 +120,8 @@ There is no `content/pages/` directory. Profile pages are the Markdown body in e
 | Blog list pagination + sort | `src/components/blog/BlogPageClient.tsx` (`blogPageVisibleCount`) |
 | Blog Markdown render | `src/components/blog/BlogPostBody.tsx` |
 | Blog assets | `src/lib/content/blog-assets.ts` |
-| Profile blog list | `loadBlogPostsByAuthorId()` + `kind: blog-channel` links → `src/components/profile/ProfileBlogPosts.tsx` |
+| Publications page year filter | `src/components/publications/PublicationsPageClient.tsx` — **All**: recent years flat + older years collapsible; **single year**: flat list only (no collapse UI, no archive separator) |
+| Profile blog list | `loadBlogPostsByAuthorId()` + `kind: blog-channel` → `src/components/profile/ProfileBlogPosts.tsx` (External / On-site groups) |
 | Profile page route + layout | `src/app/[slug]/page.tsx`, `src/components/profile/ProfilePageContent.tsx`, `src/components/profile/PiProfileHero.tsx` |
 | Venue labels (arXiv etc.) | `src/lib/publications-utils.ts`, `src/lib/content/bib-publications.ts` |
 | Team card start-date labels | `src/lib/content/constants.ts`, `src/lib/content/slug.ts` → `formatMemberStartMeta` |

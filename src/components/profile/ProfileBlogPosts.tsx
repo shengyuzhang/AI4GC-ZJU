@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
 import Tag from "@/components/site/Tag";
 import { newsDateTimeAttr } from "@/lib/content/date";
@@ -9,72 +10,103 @@ type ProfileBlogPostsProps = {
   posts: BlogPost[];
 };
 
+function ProfileBlogChannelCard({ channel }: { channel: BlogChannel }) {
+  return (
+    <a
+      href={channel.href}
+      className="profile-blog-card profile-blog-card--external"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <div className="profile-blog-card__content">
+        <p className="profile-blog-card__title">{channel.label}</p>
+        {channel.desc ? <p className="profile-blog-card__desc">{channel.desc}</p> : null}
+      </div>
+      <span className="profile-blog-card__chevron profile-blog-card__chevron--external" aria-hidden>
+        ↗
+      </span>
+    </a>
+  );
+}
+
+function ProfileBlogPostCard({ post }: { post: BlogPost }) {
+  return (
+    <Link href={`/blog/${post.id}`} className="profile-blog-card profile-blog-card--onsite">
+      <div className="profile-blog-card__content">
+        <p className="profile-blog-card__eyebrow">
+          <time dateTime={newsDateTimeAttr(post.date)}>{post.date}</time>
+        </p>
+        <p className="profile-blog-card__title">{post.title}</p>
+        {post.desc ? <p className="profile-blog-card__desc">{post.desc}</p> : null}
+        {post.tags.length > 0 ? (
+          <div className="site-tag-list profile-blog-card__tags">
+            {post.tags.map((tag) => (
+              <Tag key={tag} label={tag} />
+            ))}
+          </div>
+        ) : null}
+      </div>
+      <span className="profile-blog-card__chevron profile-blog-card__chevron--onsite" aria-hidden>
+        ›
+      </span>
+    </Link>
+  );
+}
+
+function ProfileBlogGroup({
+  label,
+  layout = "stack",
+  children,
+}: {
+  label: string;
+  layout?: "stack" | "channels";
+  children: ReactNode;
+}) {
+  return (
+    <div className="profile-markdown-blog__group">
+      <h3 className="profile-markdown-blog__group-label">{label}</h3>
+      <div
+        className={
+          layout === "channels"
+            ? "profile-markdown-blog__channel-grid"
+            : "profile-markdown-blog__stack"
+        }
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export default function ProfileBlogPosts({ title, channels, posts }: ProfileBlogPostsProps) {
   if (channels.length === 0 && posts.length === 0) {
     return null;
   }
 
-  const showLabNotesHeading = channels.length > 0 && posts.length > 0;
-
   return (
     <section className="profile-markdown-blog">
       <h2 className="profile-markdown-body__h2">{title}</h2>
 
-      {channels.length > 0 ? (
-        <div className="profile-blog-channels">
-          {channels.map((channel) => (
-            <a
-              key={`${channel.platform}-${channel.href}`}
-              href={channel.href}
-              className={`profile-blog-channel profile-blog-channel--${channel.platform}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span className="profile-blog-channel__platform">{channel.platformLabel}</span>
-              <span className="profile-blog-channel__label">{channel.label}</span>
-              {channel.desc ? (
-                <p className="profile-blog-channel__desc">{channel.desc}</p>
-              ) : null}
-              <span className="profile-blog-channel__cta" aria-hidden>
-                Visit →
-              </span>
-            </a>
-          ))}
-        </div>
-      ) : null}
+      <div className="profile-markdown-blog__groups">
+        {channels.length > 0 ? (
+          <ProfileBlogGroup label="External" layout="channels">
+            {channels.map((channel) => (
+              <ProfileBlogChannelCard
+                key={`${channel.platform}-${channel.href}-${channel.label}`}
+                channel={channel}
+              />
+            ))}
+          </ProfileBlogGroup>
+        ) : null}
 
-      {posts.length > 0 ? (
-        <div className="profile-markdown-blog__list">
-          {showLabNotesHeading ? (
-            <h3 className="profile-blog-posts__heading">Lab notes</h3>
-          ) : null}
-          {posts.map((post) => (
-            <article key={post.id} className="profile-blog-entry">
-              <time
-                className="profile-blog-entry__date"
-                dateTime={newsDateTimeAttr(post.date)}
-              >
-                {post.date}
-              </time>
-              <div className="profile-blog-entry__content">
-                <h3 className="profile-blog-entry__title">
-                  <Link href={`/blog/${post.id}`} className="site-link site-link--title">
-                    {post.title}
-                  </Link>
-                </h3>
-                {post.desc ? <p className="profile-blog-entry__desc">{post.desc}</p> : null}
-                {post.tags.length > 0 ? (
-                  <div className="site-tag-list profile-blog-entry__tags">
-                    {post.tags.map((tag) => (
-                      <Tag key={tag} label={tag} />
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-            </article>
-          ))}
-        </div>
-      ) : null}
+        {posts.length > 0 ? (
+          <ProfileBlogGroup label="On-site">
+            {posts.map((post) => (
+              <ProfileBlogPostCard key={post.id} post={post} />
+            ))}
+          </ProfileBlogGroup>
+        ) : null}
+      </div>
     </section>
   );
 }

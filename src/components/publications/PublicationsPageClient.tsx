@@ -177,12 +177,36 @@ export default function PublicationsPageClient({
           </div>
         </div>
 
-        <SplitYearSection label={String(CURRENT_YEAR)} items={currentPubs} render={renderEntry} />
-        <SplitYearSection label={String(CURRENT_YEAR - 1)} items={prevPubs} render={renderEntry} />
-
-        <CollapsibleYear label={String(CURRENT_YEAR - 2)} items={atYear(visible, CURRENT_YEAR - 2)} open={filterActive} render={renderEntry} />
-        <CollapsibleYear label={String(CURRENT_YEAR - 3)} items={atYear(visible, CURRENT_YEAR - 3)} open={filterActive} render={renderEntry} />
-        <CollapsibleYear label={`Before ${OLD_BOUNDARY}`} items={beforeItems} open={filterActive} render={renderEntry} />
+        <div className="publications-list">
+          {year === ALL ? (
+            <>
+              <SplitYearSection label={String(CURRENT_YEAR)} items={currentPubs} render={renderEntry} />
+              <SplitYearSection label={String(CURRENT_YEAR - 1)} items={prevPubs} render={renderEntry} />
+              <CollapsibleYear
+                label={String(CURRENT_YEAR - 2)}
+                items={atYear(visible, CURRENT_YEAR - 2)}
+                open={filterActive}
+                render={renderEntry}
+              />
+              <CollapsibleYear
+                label={String(CURRENT_YEAR - 3)}
+                items={atYear(visible, CURRENT_YEAR - 3)}
+                open={filterActive}
+                render={renderEntry}
+              />
+              <CollapsibleYear
+                label={`Before ${OLD_BOUNDARY}`}
+                items={beforeItems}
+                open={filterActive}
+                render={renderEntry}
+              />
+            </>
+          ) : year === BEFORE ? (
+            <SplitYearSection label={`Before ${OLD_BOUNDARY}`} items={beforeItems} render={renderEntry} />
+          ) : (
+            <SplitYearSection label={year} items={visible} render={renderEntry} />
+          )}
+        </div>
 
         {!hasAny ? <p className="publications-empty">No publications match your filters.</p> : null}
       </ContentSection>
