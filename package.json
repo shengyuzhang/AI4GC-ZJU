@@ -18,11 +18,13 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "pubs:sync": "node scripts/sync-dblp.mjs",
+    "team:order": "node scripts/gen-member-order.mjs",
     "check": "npm run lint && npm run typecheck && npm run test && npm run build"
   },
   "dependencies": {
     "@base-ui/react": "^1.3.0",
     "@retorquere/bibtex-parser": "^10.0.0",
+    "@vercel/analytics": "^2.0.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "gray-matter": "^4.0.3",

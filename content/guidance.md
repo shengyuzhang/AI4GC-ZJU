@@ -548,7 +548,7 @@ links:
 | `bio`            | 必填  | 必填  | 简介（卡片与 SEO fallback）                                                                                                                  |
 | `startDate`      | —   | 必填  | 入学/加入时间；纯年份显示为 `2020`。`/team` 卡片会加组前缀：**Enrolled**（phds/masters/undergrads/alumni）或 **Joined**（postdocs），见 `TEAM_MEMBER_START_LABELS` |
 | `degree`         | 可选  | 可选  | **PI** 个人页 Hero 副标题；**Member** 仅在 `/team` 卡片元信息中展示                                                                                    |
-| `order`          | 可选  | 可选  | 组内排序权重                                                                                                                                |
+| `order`          | 可选  | 可选  | 组内排序的手动权重（数值越小越靠前）；不填则同 `startDate` 内按 PR 提交先后排序                                                                  |
 | `id`             | 可选  | 可选  | 默认等于文件夹名；一般无需填写                                                                                                                       |
 | `profile`        | 可选  | 可选  | `true` 时发布个人页，URL 为 `/{成员文件夹名}`；省略或 `false` 则仅在 `/team` 展示                                                                            |
 | `noindex`        | 可选  | 可选  | `true` 时该个人页**不被搜索引擎收录**（单页 noindex + 不进 sitemap），即使全站 `indexable: true`；仍照常在 `/team` 显示。用于模板/占位主页，改成真实内容后删掉                          |
@@ -557,7 +557,7 @@ links:
 | `email`          | 可选  | 可选  | 联系邮箱；个人页 Hero（tags 下方）与 `/team` 卡片头部（姓名/meta 下方）单独展示。`links` 中遗留的 `mailto:` 构建时自动提取                                                   |
 
 
-组内排序：`startDate` 升序，同日期按姓名。
+组内排序：`startDate`（入组/入学时间）升序；**同一时间时，先提交 PR（最早被加入仓库）的成员排在前面**（按 git 添加顺序）。如需手动指定，可在 frontmatter 写 `order`（数值越小越靠前，优先级高于 PR 顺序）。
 
 个人页 Hero：**PI**（`content/team/pi/`）为居中头像 + 姓名 + `degree`；可选 `heroBackground` 背景图，否则默认渐变；正文区域水平居中、文本左对齐。**Member** 为 compact 头像 Hero + 实验室 kicker（Hero **不**显示 `degree`）。`tags` / `email` / `links` 在 Hero 中展示。`bio` 用于 SEO、团队卡片及无 Markdown 时的 fallback。
 

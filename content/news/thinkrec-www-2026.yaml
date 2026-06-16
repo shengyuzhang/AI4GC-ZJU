@@ -1,0 +1,18 @@
+date: April 2026
+title: ThinkRec accepted to WWW 2026
+desc: >-
+  ThinkRec reframes LLM-based recommendation as a reasoning problem, letting the
+  model explicitly reason about user preferences to improve recommendation
+  quality and user trust.
+featured: true
+image: /blog-assets/thinkrec-www-2026/thinkrec.webp
+imageAlt: Overview of the proposed ThinkRec.
+links:
+  - label: Blog
+    href: /blog/thinkrec-www-2026
+  - label: Paper
+    href: https://arxiv.org/abs/2505.15091
+    external: true
+  - label: GitHub
+    href: https://github.com/Yu-Qi-hang/ThinkRec
+    external: true
