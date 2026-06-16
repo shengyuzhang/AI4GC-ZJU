@@ -8,6 +8,10 @@
 // We bake it to a committed JSON (rather than calling git at build/runtime) so
 // the order is reliable on Vercel, where the runtime has no .git and where build
 // cwd is unreliable.
+//
+// Keyed by the CURRENT folder name; the first-add time is resolved with
+// `git log --follow` so a folder that was renamed (e.g. an ID added later) still
+// keeps its original submission order.
 
 import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, writeFileSync } from "node:fs";
@@ -18,51 +22,51 @@ const teamRel = "content/team";
 const teamDir = path.join(repoRoot, teamRel);
 const outFile = path.join(repoRoot, "src/lib/content/member-order.json");
 
-function countMemberFolders() {
-  let count = 0;
+function listMemberFolders() {
+  const folders = [];
   for (const group of readdirSync(teamDir, { withFileTypes: true })) {
     if (!group.isDirectory()) continue;
     const groupDir = path.join(teamDir, group.name);
     for (const folder of readdirSync(groupDir, { withFileTypes: true })) {
       if (folder.isDirectory() && existsSync(path.join(groupDir, folder.name, "index.md"))) {
-        count += 1;
+        folders.push({ folder: folder.name, rel: `${teamRel}/${group.name}/${folder.name}/index.md` });
       }
     }
   }
-  return count;
+  return folders;
 }
 
-function gitAddOrder() {
-  const out = execFileSync(
-    "git",
-    ["-C", repoRoot, "log", "--diff-filter=A", "--reverse", "--name-only", "--format=", "--", teamRel],
-    { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 },
-  );
-  const order = {};
-  let index = 0;
-  for (const line of out.split("\n")) {
-    const file = line.trim();
-    if (!file.endsWith("/index.md")) continue;
-    const folder = file.split("/").at(-2);
-    if (folder && !(folder in order)) order[folder] = index++;
+// Earliest commit timestamp that added this file, following renames.
+function firstAddTime(rel) {
+  try {
+    const out = execFileSync(
+      "git",
+      ["-C", repoRoot, "log", "--follow", "--diff-filter=A", "--reverse", "--format=%ct", "--", rel],
+      { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 },
+    );
+    const first = out.trim().split("\n").filter(Boolean)[0];
+    return first ? Number.parseInt(first, 10) : Number.MAX_SAFE_INTEGER;
+  } catch {
+    return Number.MAX_SAFE_INTEGER;
   }
-  return order;
 }
 
 try {
-  const order = gitAddOrder();
-  const have = Object.keys(order).length;
-  const need = countMemberFolders();
-  if (have > 0 && have >= need) {
-    writeFileSync(outFile, `${JSON.stringify(order, null, 2)}\n`);
-    console.log(`[gen-member-order] wrote ${have} members -> ${path.relative(repoRoot, outFile)}`);
-  } else {
-    console.warn(
-      `[gen-member-order] git history incomplete (${have}/${need}); keeping existing ${path.relative(repoRoot, outFile)}`,
-    );
+  const folders = listMemberFolders().map((f) => ({ ...f, ts: firstAddTime(f.rel) }));
+  const tracked = folders.filter((f) => f.ts !== Number.MAX_SAFE_INTEGER).length;
+  if (tracked === 0) {
+    console.warn("[gen-member-order] no git history found; keeping existing order file");
     if (!existsSync(outFile)) writeFileSync(outFile, "{}\n");
+  } else {
+    folders.sort((a, b) => a.ts - b.ts || a.folder.localeCompare(b.folder));
+    const order = {};
+    folders.forEach((f, i) => {
+      order[f.folder] = i;
+    });
+    writeFileSync(outFile, `${JSON.stringify(order, null, 2)}\n`);
+    console.log(`[gen-member-order] wrote ${folders.length} members -> ${path.relative(repoRoot, outFile)}`);
   }
 } catch (error) {
-  console.warn("[gen-member-order] git unavailable:", error.message, "- keeping existing order file");
+  console.warn("[gen-member-order] failed:", error.message, "- keeping existing order file");
   if (!existsSync(outFile)) writeFileSync(outFile, "{}\n");
 }
