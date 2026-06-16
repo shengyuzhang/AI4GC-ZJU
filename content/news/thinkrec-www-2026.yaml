@@ -1,0 +1,17 @@
+date: April 2026
+title: ThinkRec accepted to WWW 2026
+desc: >-
+  Graph2Eval turns documents and web pages into a knowledge-graph task space for
+  scalable, controllable evaluation of RAG and web agents.
+featured: true
+image: /blog-assets/thinkrec-www-2026/thinkrec.webp
+imageAlt: Overview of the proposed ThinkRec.
+links:
+  - label: Blog
+    href: /blog/graph2eval-cvpr-2026
+  - label: Paper
+    href: https://arxiv.org/abs/2505.15091
+    external: true
+  - label: GitHub
+    href: https://github.com/Yu-Qi-hang/ThinkRec
+    external: true
