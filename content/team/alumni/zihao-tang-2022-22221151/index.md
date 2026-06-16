@@ -39,7 +39,7 @@ I then explored this direction through **ModelGPT**, which uses LLMs to generate
 
 ## @papers Selected Papers
 
-@bib publications
+@bib papers.bib
 
 - tang2026mnemis
 - li2025tl
