@@ -1,6 +1,6 @@
 ---
 startDate: 2025
-name: Xiongtao Xiong
+name: Tao Xiong
 photo: photo.jpg
 bio: >-
   Master's student at AI4GC Lab working on GUI/CLI agents, reward modeling,
