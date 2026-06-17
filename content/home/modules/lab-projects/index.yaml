@@ -39,3 +39,21 @@ items:
         href: https://github.com/mrwwk/DeskCraft
       - label: Paper
         href: https://arxiv.org/abs/2606.03103
+  - id: video-production-buddy
+    name: Video Production Buddy
+    period: 2026–present
+    image: video-production-buddy.jpg
+    imageAlt: Video Production Buddy
+    desc: >-
+      An open-source AI video production assistant that turns general-purpose
+      agents into video production experts, with brief clarification, proposal
+      gates, asset generation, composition, and review before expensive
+      generation runs.
+    tags:
+      - Content Production
+      - Agents
+    links:
+      - label: GitHub
+        href: https://github.com/video-production-buddy/video-production-buddy
+      - label: Project Page
+        href: https://video-production-buddy.github.io

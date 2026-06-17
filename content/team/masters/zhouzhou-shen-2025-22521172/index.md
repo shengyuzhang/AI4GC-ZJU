@@ -9,9 +9,9 @@ tags:
 email: zhouzhoushen@zju.edu.cn
 profile: true
 links:
-  - label: Google Scholar
-    href: https://scholar.google.com/citations?hl=en&user=8uZchR8AAAAJ
-    kind: social
+  - label: Homepage
+    href: https://zhouzhoushen.github.io
+    kind: website
 ---
 
 ## About Me
