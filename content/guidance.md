@@ -90,6 +90,7 @@ content/
     ├── postdocs/{name-slug}-{year}-{student-or-staff-id}/index.md
     ├── phds/{name-slug}-{year}-{student-or-staff-id}/index.md
     ├── masters/{name-slug}-{year}-{student-or-staff-id}/index.md
+    ├── undergrads/{name-slug}-{year}-{student-or-staff-id}/index.md
     ├── interns/{name-slug}-{year}-{student-or-staff-id}/index.md
     └── alumni/{name-slug}-{year}-{student-or-staff-id}/index.md
 ```
@@ -515,6 +516,7 @@ content/team/postdocs/qinghao-hu-2022-020001/
 | `postdocs/`   | Postdoctoral           |
 | `phds/`       | Ph.D                   |
 | `masters/`    | Master                 |
+| `undergrads/` | Undergraduate          |
 | `interns/`    | Intern                 |
 | `alumni/`     | Graduated              |
 
@@ -547,7 +549,7 @@ links:
 | `photo`          | 必填  | 必填  | 头像：`null` 为首字母占位；推荐使用成员文件夹内相对路径（如 `photo.jpg`），运行时映射为 `/team-assets/{group}/{member}/photo.jpg` |
 | `heroBackground` | 可选  | —   | **PI 个人页 Hero 背景图**；省略则用默认渐变。路径规则同 `photo`                                                                                            |
 | `bio`            | 必填  | 必填  | 简介（卡片与 SEO fallback）                                                                                                                  |
-| `startDate`      | —   | 必填  | 入学/加入时间；纯年份显示为 `2020`。`/team` 卡片会加组前缀：**Enrolled**（phds/masters/interns/alumni）或 **Joined**（postdocs），见 `TEAM_MEMBER_START_LABELS` |
+| `startDate`      | —   | 必填  | 入学/加入时间；纯年份显示为 `2020`。`/team` 卡片会加组前缀：**Enrolled**（phds/masters/undergrads/alumni）或 **Joined**（postdocs/interns），见 `TEAM_MEMBER_START_LABELS` |
 | `degree`         | 可选  | 可选  | **PI** 个人页 Hero 副标题；**Member** 仅在 `/team` 卡片元信息中展示                                                                                    |
 | `order`          | 可选  | 可选  | 组内排序的手动权重（数值越小越靠前）；不填则同 `startDate` 内按 PR 提交先后排序                                                                  |
 | `id`             | 可选  | 可选  | 默认等于文件夹名；一般无需填写                                                                                                                       |

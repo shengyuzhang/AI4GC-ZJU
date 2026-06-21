@@ -113,7 +113,6 @@ export default async function RootLayout({
     <html
       lang="en"
       className={`${sourceSerif.variable} ${sourceSans.variable} ${ibmPlexMono.variable}`}
-      suppressHydrationWarning
     >
       <body
         className={

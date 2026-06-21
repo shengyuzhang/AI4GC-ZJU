@@ -92,7 +92,7 @@ There is no `content/pages/` directory. Profile pages are the Markdown body in e
 
 - Each member: `content/team/{group}/{folder}/index.md` (not flat `.yaml` files).
 - **Folder name = canonical id + profile URL.** Default for non-PI: `{name-slug}-{year}-{student-or-staff-id}` — student ID (学号) or staff/employee ID (工号), e.g. `jane-doe-2024-120010010`, `qinghao-hu-2022-020001`. PI may use `{name-slug}` only (e.g. `shengyu-zhang`). Optional frontmatter `id:` overrides internal id only; profile URL stays the folder name.
-- Groups: `pi`, `postdocs`, `phds`, `masters`, `interns`, `alumni`.
+- Groups: `pi`, `postdocs`, `phds`, `masters`, `undergrads`, `interns`, `alumni`.
 - Non-PI members require `startDate` in frontmatter.
 - `profile: true` publishes at `/{folder}`; build fails on duplicate profile slugs.
 - **PI profile** (`content/team/pi/`): centered avatar hero — `degree` subtitle; default gradient background; optional `heroBackground` image (same path rules as `photo`).
@@ -101,7 +101,7 @@ There is no `content/pages/` directory. Profile pages are the Markdown body in e
 - `photo:` should be a relative file in the member folder (served under `/team-assets/...`); member avatars are self-contained member assets.
 - `tags:` optional string array — free-form labels under profile hero title and on `/team` card.
 - `email:` optional — profile hero (below tags); team card header (below name/meta).
-- `/team` cards prefix `startDate` by group: **Enrolled** (phds/masters/interns/alumni), **Joined** (postdocs). Labels in `src/lib/content/constants.ts` → `TEAM_MEMBER_START_LABELS`.
+- `/team` cards prefix `startDate` by group: **Enrolled** (phds/masters/undergrads/alumni), **Joined** (postdocs/interns). Labels in `src/lib/content/constants.ts` → `TEAM_MEMBER_START_LABELS`.
 - Homepage hero optional `brandMark` (prefer `/content-assets/...`) shown on the right of `content/home/hero.yaml`.
 - BibTeX arXiv entries: use `journal={arXiv}` — build normalizes long `arXiv preprint arXiv:…` strings to display as `arXiv · {year}` on profile/publication lists.
 - Profile `@blog` section (`## @blog …` in member `index.md`): **External** group lists `kind: blog-channel` links (WeChat, X, Xiaohongshu, etc.) as `label` + optional `desc` cards; **On-site** group lists `/blog/…` posts whose `authorId` / `authorIds` point at the member. The whole section is omitted when both groups would be empty. GitHub / Scholar 等写在普通 `links`（无 `blog-channel`），显示在 Hero。内容渠道主页用 `blog-channel` 挂在 **External**，避免与 Hero 重复同一 URL。

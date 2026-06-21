@@ -20,6 +20,7 @@ export const TEAM_CONTENT_GROUPS = [
   "postdocs",
   "phds",
   "masters",
+  "undergrads",
   "interns",
   "alumni",
 ] as const;
@@ -28,6 +29,7 @@ export const TEAM_GROUPS = [
   "postdocs",
   "phds",
   "masters",
+  "undergrads",
   "interns",
   "alumni",
 ] as const;
