@@ -2,6 +2,7 @@ import { pick, type Lang } from "@/lib/i18n/language-context";
 import type {
   HomeContent,
   HomeModule,
+  HomeProject,
   LinkItem,
   NewsItem,
 } from "@/types/lab";
@@ -33,10 +34,6 @@ function localizeModule(module: HomeModule, lang: Lang): HomeModule {
           ...project,
           desc: pick(lang, project.desc, project.descZh),
           period: pick(lang, project.period, project.periodZh),
-          tags:
-            lang === "zh" && project.tagsZh && project.tagsZh.length > 0
-              ? project.tagsZh
-              : project.tags,
         })),
       };
     case "prose":
@@ -65,6 +62,36 @@ function localizeModule(module: HomeModule, lang: Lang): HomeModule {
     default:
       return { ...module, title };
   }
+}
+
+/** English `tags` stay stable for filtering; labels swap via aligned `tagsZh`. */
+export function localizedProjectTagLabel(
+  project: HomeProject,
+  tag: string,
+  lang: Lang,
+): string {
+  const index = (project.tags ?? []).indexOf(tag);
+  if (lang === "zh" && index >= 0 && project.tagsZh?.[index]) {
+    return project.tagsZh[index];
+  }
+  return tag;
+}
+
+export function localizedProjectTags(project: HomeProject, lang: Lang): string[] {
+  return (project.tags ?? []).map((tag) => localizedProjectTagLabel(project, tag, lang));
+}
+
+export function localizedProjectTagFilterLabels(
+  projects: HomeProject[],
+  filterTags: string[],
+  lang: Lang,
+): Map<string, string> {
+  const labels = new Map<string, string>();
+  for (const tag of filterTags) {
+    const owner = projects.find((project) => (project.tags ?? []).includes(tag));
+    labels.set(tag, owner ? localizedProjectTagLabel(owner, tag, lang) : tag);
+  }
+  return labels;
 }
 
 /** Returns a HomeContent with its visible strings swapped to `lang` (English fallback). */

@@ -1,13 +1,16 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { X } from "lucide-react";
 import Image from "next/image";
-import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import LinkChip from "@/components/site/LinkChip";
 import SegmentedControl from "@/components/site/SegmentedControl";
 import Tag from "@/components/site/Tag";
 import { pick, useLang } from "@/lib/i18n/language-context";
+import {
+  localizedProjectTagFilterLabels,
+  localizedProjectTagLabel,
+} from "@/lib/i18n/localize-home";
 import { cn } from "@/lib/utils";
 import { getInitials } from "@/lib/initials";
 import {
@@ -77,6 +80,11 @@ function collectTags(projects: HomeProject[]): string[] {
   return Array.from(tags).sort((a, b) => a.localeCompare(b));
 }
 
+type ProjectCardProps = {
+  project: HomeProject;
+  githubStars: GitHubStarsMap;
+};
+
 function ProjectCardVisual({ project }: { project: HomeProject }) {
   const [failed, setFailed] = useState(false);
   const imageSrc = project.image;
@@ -105,62 +113,9 @@ function ProjectCardVisual({ project }: { project: HomeProject }) {
   );
 }
 
-function ProjectCard({
-  project,
-  githubStars,
-}: {
-  project: HomeProject;
-  githubStars: GitHubStarsMap;
-}) {
+function ProjectCard({ project, githubStars }: ProjectCardProps) {
   const { lang } = useLang();
-  const tags = project.tags ?? [];
-  const descRef = useRef<HTMLParagraphElement>(null);
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  const dialogTitleId = useId();
-  const [truncated, setTruncated] = useState(false);
-
-  const measureTruncation = useCallback(() => {
-    const el = descRef.current;
-    const card = el?.closest(".project-card");
-    if (!el || !card) {
-      return;
-    }
-
-    el.classList.remove("project-card__desc--clamped");
-    const fullHeight = el.scrollHeight;
-    const maxHeight = Number.parseFloat(
-      getComputedStyle(card).getPropertyValue("--project-card-desc-block-height"),
-    );
-    setTruncated(Number.isFinite(maxHeight) && fullHeight > maxHeight + 1);
-  }, []);
-
-  useLayoutEffect(() => {
-    measureTruncation();
-  }, [project.desc, measureTruncation]);
-
-  useEffect(() => {
-    const el = descRef.current;
-    if (!el) {
-      return;
-    }
-
-    const observer = new ResizeObserver(() => {
-      measureTruncation();
-    });
-    observer.observe(el);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [measureTruncation]);
-
-  function openDialog() {
-    dialogRef.current?.showModal();
-  }
-
-  function closeDialog() {
-    dialogRef.current?.close();
-  }
+  const englishTags = project.tags ?? [];
 
   return (
     <article className="project-card">
@@ -170,41 +125,13 @@ function ProjectCard({
           <h3 className="project-card__name">{project.name}</h3>
           {project.period ? <p className="project-card__period">{project.period}</p> : null}
         </div>
-        {project.desc ? (
-          <div className="project-card__desc-block">
-            <div
-              className={cn(
-                "project-card__desc-view",
-                truncated && "project-card__desc-view--truncated",
-              )}
-            >
-              <p
-                ref={descRef}
-                className={cn("project-card__desc", truncated && "project-card__desc--clamped")}
-              >
-                {project.desc}
-              </p>
-            </div>
-            <div className="project-card__desc-foot">
-              {truncated ? (
-                <button
-                  type="button"
-                  className="project-card__desc-more"
-                  aria-haspopup="dialog"
-                  onClick={openDialog}
-                >
-                  {pick(lang, "Read more", "阅读全文")}
-                </button>
-              ) : null}
-            </div>
-          </div>
-        ) : null}
-        {tags.length > 0 || project.links.length > 0 ? (
+        {project.desc ? <p className="project-card__desc">{project.desc}</p> : null}
+        {englishTags.length > 0 || project.links.length > 0 ? (
           <footer className="project-card__footer">
-            {tags.length > 0 ? (
+            {englishTags.length > 0 ? (
               <div className="site-tag-list project-card__tags">
-                {tags.map((tag) => (
-                  <Tag key={tag} label={tag} />
+                {englishTags.map((tag) => (
+                  <Tag key={tag} label={localizedProjectTagLabel(project, tag, lang)} />
                 ))}
               </div>
             ) : null}
@@ -216,48 +143,6 @@ function ProjectCard({
               </div>
             ) : null}
           </footer>
-        ) : null}
-        {project.desc ? (
-          <dialog
-            ref={dialogRef}
-            className="project-card__dialog"
-            aria-labelledby={dialogTitleId}
-            onClose={closeDialog}
-            onClick={(event) => {
-              const dialog = dialogRef.current;
-              if (!dialog) {
-                return;
-              }
-
-              const rect = dialog.getBoundingClientRect();
-              const clickedBackdrop =
-                event.clientX < rect.left ||
-                event.clientX > rect.right ||
-                event.clientY < rect.top ||
-                event.clientY > rect.bottom;
-
-              if (clickedBackdrop) {
-                closeDialog();
-              }
-            }}
-          >
-            <div className="project-card__dialog-panel">
-              <button
-                type="button"
-                className="project-card__dialog-close"
-                aria-label={pick(lang, "Close", "关闭")}
-                onClick={closeDialog}
-              >
-                <X aria-hidden size={16} strokeWidth={2.25} />
-              </button>
-              <div className="project-card__dialog-body">
-                <h2 id={dialogTitleId} className="project-card__dialog-title">
-                  {project.name}
-                </h2>
-                <p className="project-card__dialog-desc">{project.desc}</p>
-              </div>
-            </div>
-          </dialog>
         ) : null}
       </div>
     </article>
@@ -271,21 +156,28 @@ export default function ProjectsPanel({ projects, githubStars }: ProjectsPanelPr
   const tags = useMemo(() => collectTags(projects), [projects]);
   const [activeTag, setActiveTag] = useState<string>(ALL_FILTER);
   const [page, setPage] = useState(0);
+  const effectiveActiveTag =
+    activeTag === ALL_FILTER || tags.includes(activeTag) ? activeTag : ALL_FILTER;
+
+  const tagFilterLabels = useMemo(
+    () => localizedProjectTagFilterLabels(projects, tags, lang),
+    [projects, tags, lang],
+  );
 
   const filterOptions = useMemo(
     () => [
       { value: ALL_FILTER, label: pick(lang, "All", "全部") },
-      ...tags.map((tag) => ({ value: tag, label: tag })),
+      ...tags.map((tag) => ({ value: tag, label: tagFilterLabels.get(tag) ?? tag })),
     ],
-    [tags, lang],
+    [tags, lang, tagFilterLabels],
   );
 
   const filteredProjects = useMemo(() => {
-    if (activeTag === ALL_FILTER) {
+    if (effectiveActiveTag === ALL_FILTER) {
       return projects;
     }
-    return projects.filter((project) => (project.tags ?? []).includes(activeTag));
-  }, [activeTag, projects]);
+    return projects.filter((project) => (project.tags ?? []).includes(effectiveActiveTag));
+  }, [effectiveActiveTag, projects]);
 
   const pageSize = gridColumns * PROJECT_GRID_MAX_ROWS;
   const totalPages = Math.max(1, Math.ceil(filteredProjects.length / pageSize));
@@ -309,7 +201,7 @@ export default function ProjectsPanel({ projects, githubStars }: ProjectsPanelPr
       {tags.length > 0 ? (
         <div className="projects-panel__toolbar">
           <SegmentedControl
-            value={activeTag}
+            value={effectiveActiveTag}
             options={filterOptions}
             onChange={handleTagChange}
             ariaLabel={pick(lang, "Filter projects by topic", "按主题筛选项目")}
@@ -321,29 +213,29 @@ export default function ProjectsPanel({ projects, githubStars }: ProjectsPanelPr
         <AnimatePresence mode="wait" initial={false}>
           {visibleProjects.length > 0 ? (
             <motion.ul
-              key={`project-grid-${activeTag}-${pageIndex}`}
+              key={`project-grid-${effectiveActiveTag}-${pageIndex}`}
               className="project-grid"
               layout
               initial={reduceMotion ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={reduceMotion ? undefined : { opacity: 0 }}
-            transition={{ duration: reduceMotion ? 0 : motionDuration.fast, ease: motionEase }}
-          >
-            <AnimatePresence mode="popLayout" initial={false}>
-              {visibleProjects.map((project, index) => (
-                <motion.li
-                  key={project.id}
-                  className="project-grid__item"
-                  layout
-                  initial={reduceMotion ? false : motionListEnter}
-                  animate={motionListShow}
-                  exit={
-                    reduceMotion
-                      ? undefined
-                      : { ...motionListExit, transition: { duration: motionDuration.fast } }
-                  }
-                  transition={motionListItemTransition(index, reduceMotion)}
-                >
+              transition={{ duration: reduceMotion ? 0 : motionDuration.fast, ease: motionEase }}
+            >
+              <AnimatePresence mode="popLayout" initial={false}>
+                {visibleProjects.map((project, index) => (
+                  <motion.li
+                    key={project.id}
+                    className="project-grid__item"
+                    layout
+                    initial={reduceMotion ? false : motionListEnter}
+                    animate={motionListShow}
+                    exit={
+                      reduceMotion
+                        ? undefined
+                        : { ...motionListExit, transition: { duration: motionDuration.fast } }
+                    }
+                    transition={motionListItemTransition(index, reduceMotion)}
+                  >
                     <ProjectCard project={project} githubStars={githubStars} />
                   </motion.li>
                 ))}
@@ -353,13 +245,13 @@ export default function ProjectsPanel({ projects, githubStars }: ProjectsPanelPr
             <motion.p
               key="empty"
               className="projects-panel__empty"
-            initial={reduceMotion ? false : motionRevealEnter}
-            animate={motionRevealShow}
-            exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
-            transition={{
-              duration: reduceMotion ? 0 : motionDuration.normal,
-              ease: motionEase,
-            }}
+              initial={reduceMotion ? false : motionRevealEnter}
+              animate={motionRevealShow}
+              exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
+              transition={{
+                duration: reduceMotion ? 0 : motionDuration.normal,
+                ease: motionEase,
+              }}
             >
               {pick(lang, "No projects match this filter.", "没有符合该筛选条件的项目。")}
             </motion.p>
