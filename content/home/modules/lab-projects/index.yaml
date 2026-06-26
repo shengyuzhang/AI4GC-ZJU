@@ -76,3 +76,29 @@ items:
         href: https://github.com/video-production-buddy/video-production-buddy
       - label: Project Page
         href: https://video-production-buddy.github.io
+  - id: repo-docs-skills
+    name: Repo-Docs
+    period: 2026–present
+    periodZh: 2026 至今
+    image: repo-docs-skills.png
+    imageAlt: Repo-Docs skill for readable, understandable project code
+    desc: >-
+      A coding-agent skill that makes fast-moving repos easier to read and
+      understand. It writes and syncs repo-docs/ with the codebase—walkthroughs,
+      concept pages, glossary, change log, and agent rules—so readers can follow
+      one real path through the code and grasp how it works.
+    descZh: >-
+      面向 coding agent 的技能包，让快速变化的仓库更易读、更易理解。它在 repo-docs/
+      中随代码同步维护 walkthrough、概念页、术语表、变更记录与 agent
+      规则，帮助读者沿真实路径读懂代码、把握设计。
+    tags:
+      - Agents
+      - Developer Tools
+    tagsZh:
+      - 智能体
+      - 开发者工具
+    links:
+      - label: GitHub
+        href: https://github.com/YurunChen/repo-docs-skills
+      - label: README
+        href: https://github.com/YurunChen/repo-docs-skills#readme

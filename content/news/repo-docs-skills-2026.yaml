@@ -1,0 +1,25 @@
+date: Jun 2026
+title: Repo-Docs is open-source — help agents and humans understand your code
+titleZh: Repo-Docs 开源：让人和 agent 更好地读懂项目代码
+type: Open Source
+typeZh: 开源
+desc: >-
+  We open-sourced Repo-Docs, a coding-agent skill that turns fast-changing
+  repos into something you can actually read. It builds and keeps repo-docs/
+  in sync with the code—walkthroughs, concept pages, glossary, change log, and
+  agent rules—so newcomers can trace real behavior and understand design without
+  hunting through files or chat.
+descZh: >-
+  我们开源了 Repo-Docs：面向 coding agent 的技能包，让快速迭代的仓库变得可读、可理解。它在
+  repo-docs/ 中随代码同步维护 walkthrough、概念页、术语表、变更记录与 agent
+  规则，帮助读者沿真实路径理解行为与设计，而不必在文件和聊天记录里摸索。
+featured: true
+image: /home-assets/lab-projects/repo-docs-skills.png
+imageAlt: Repo-Docs skill for readable, understandable project code
+links:
+  - label: GitHub
+    href: https://github.com/YurunChen/repo-docs-skills
+    external: true
+  - label: README
+    href: https://github.com/YurunChen/repo-docs-skills#readme
+    external: true

@@ -1,8 +1,9 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { X } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 import LinkChip from "@/components/site/LinkChip";
 import SegmentedControl from "@/components/site/SegmentedControl";
 import Tag from "@/components/site/Tag";
@@ -111,7 +112,55 @@ function ProjectCard({
   project: HomeProject;
   githubStars: GitHubStarsMap;
 }) {
+  const { lang } = useLang();
   const tags = project.tags ?? [];
+  const descRef = useRef<HTMLParagraphElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const dialogTitleId = useId();
+  const [truncated, setTruncated] = useState(false);
+
+  const measureTruncation = useCallback(() => {
+    const el = descRef.current;
+    const card = el?.closest(".project-card");
+    if (!el || !card) {
+      return;
+    }
+
+    el.classList.remove("project-card__desc--clamped");
+    const fullHeight = el.scrollHeight;
+    const maxHeight = Number.parseFloat(
+      getComputedStyle(card).getPropertyValue("--project-card-desc-block-height"),
+    );
+    setTruncated(Number.isFinite(maxHeight) && fullHeight > maxHeight + 1);
+  }, []);
+
+  useLayoutEffect(() => {
+    measureTruncation();
+  }, [project.desc, measureTruncation]);
+
+  useEffect(() => {
+    const el = descRef.current;
+    if (!el) {
+      return;
+    }
+
+    const observer = new ResizeObserver(() => {
+      measureTruncation();
+    });
+    observer.observe(el);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [measureTruncation]);
+
+  function openDialog() {
+    dialogRef.current?.showModal();
+  }
+
+  function closeDialog() {
+    dialogRef.current?.close();
+  }
 
   return (
     <article className="project-card">
@@ -121,22 +170,94 @@ function ProjectCard({
           <h3 className="project-card__name">{project.name}</h3>
           {project.period ? <p className="project-card__period">{project.period}</p> : null}
         </div>
-        {project.desc ? <p className="project-card__desc">{project.desc}</p> : null}
-        {tags.length > 0 ? (
-          <div className="project-card__meta-row">
-            <div className="site-tag-list">
-              {tags.map((tag) => (
-                <Tag key={tag} label={tag} />
-              ))}
+        {project.desc ? (
+          <div className="project-card__desc-block">
+            <div
+              className={cn(
+                "project-card__desc-view",
+                truncated && "project-card__desc-view--truncated",
+              )}
+            >
+              <p
+                ref={descRef}
+                className={cn("project-card__desc", truncated && "project-card__desc--clamped")}
+              >
+                {project.desc}
+              </p>
+            </div>
+            <div className="project-card__desc-foot">
+              {truncated ? (
+                <button
+                  type="button"
+                  className="project-card__desc-more"
+                  aria-haspopup="dialog"
+                  onClick={openDialog}
+                >
+                  {pick(lang, "Read more", "阅读全文")}
+                </button>
+              ) : null}
             </div>
           </div>
         ) : null}
-        {project.links.length > 0 ? (
-          <div className="project-card__links site-link-chip-list">
-            {project.links.map((link) => (
-              <LinkChip key={link.href} link={link} githubStars={githubStars} />
-            ))}
-          </div>
+        {tags.length > 0 || project.links.length > 0 ? (
+          <footer className="project-card__footer">
+            {tags.length > 0 ? (
+              <div className="site-tag-list project-card__tags">
+                {tags.map((tag) => (
+                  <Tag key={tag} label={tag} />
+                ))}
+              </div>
+            ) : null}
+            {project.links.length > 0 ? (
+              <div className="site-link-chip-list project-card__links">
+                {project.links.map((link) => (
+                  <LinkChip key={link.href} link={link} githubStars={githubStars} />
+                ))}
+              </div>
+            ) : null}
+          </footer>
+        ) : null}
+        {project.desc ? (
+          <dialog
+            ref={dialogRef}
+            className="project-card__dialog"
+            aria-labelledby={dialogTitleId}
+            onClose={closeDialog}
+            onClick={(event) => {
+              const dialog = dialogRef.current;
+              if (!dialog) {
+                return;
+              }
+
+              const rect = dialog.getBoundingClientRect();
+              const clickedBackdrop =
+                event.clientX < rect.left ||
+                event.clientX > rect.right ||
+                event.clientY < rect.top ||
+                event.clientY > rect.bottom;
+
+              if (clickedBackdrop) {
+                closeDialog();
+              }
+            }}
+          >
+            <div className="project-card__dialog-panel">
+              <button
+                type="button"
+                className="project-card__dialog-close"
+                aria-label={pick(lang, "Close", "关闭")}
+                onClick={closeDialog}
+              >
+                <X aria-hidden size={16} strokeWidth={2.25} />
+              </button>
+              <div className="project-card__dialog-body">
+                <h2 id={dialogTitleId} className="project-card__dialog-title">
+                  {project.name}
+                </h2>
+                <p className="project-card__dialog-desc">{project.desc}</p>
+              </div>
+            </div>
+          </dialog>
         ) : null}
       </div>
     </article>
