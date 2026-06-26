@@ -7,6 +7,10 @@ import LinkChip from "@/components/site/LinkChip";
 import SegmentedControl from "@/components/site/SegmentedControl";
 import Tag from "@/components/site/Tag";
 import { pick, useLang } from "@/lib/i18n/language-context";
+import {
+  localizedProjectTagFilterLabels,
+  localizedProjectTagLabel,
+} from "@/lib/i18n/localize-home";
 import { cn } from "@/lib/utils";
 import { getInitials } from "@/lib/initials";
 import {
@@ -76,6 +80,11 @@ function collectTags(projects: HomeProject[]): string[] {
   return Array.from(tags).sort((a, b) => a.localeCompare(b));
 }
 
+type ProjectCardProps = {
+  project: HomeProject;
+  githubStars: GitHubStarsMap;
+};
+
 function ProjectCardVisual({ project }: { project: HomeProject }) {
   const [failed, setFailed] = useState(false);
   const imageSrc = project.image;
@@ -104,14 +113,9 @@ function ProjectCardVisual({ project }: { project: HomeProject }) {
   );
 }
 
-function ProjectCard({
-  project,
-  githubStars,
-}: {
-  project: HomeProject;
-  githubStars: GitHubStarsMap;
-}) {
-  const tags = project.tags ?? [];
+function ProjectCard({ project, githubStars }: ProjectCardProps) {
+  const { lang } = useLang();
+  const englishTags = project.tags ?? [];
 
   return (
     <article className="project-card">
@@ -122,21 +126,23 @@ function ProjectCard({
           {project.period ? <p className="project-card__period">{project.period}</p> : null}
         </div>
         {project.desc ? <p className="project-card__desc">{project.desc}</p> : null}
-        {tags.length > 0 ? (
-          <div className="project-card__meta-row">
-            <div className="site-tag-list">
-              {tags.map((tag) => (
-                <Tag key={tag} label={tag} />
-              ))}
-            </div>
-          </div>
-        ) : null}
-        {project.links.length > 0 ? (
-          <div className="project-card__links site-link-chip-list">
-            {project.links.map((link) => (
-              <LinkChip key={link.href} link={link} githubStars={githubStars} />
-            ))}
-          </div>
+        {englishTags.length > 0 || project.links.length > 0 ? (
+          <footer className="project-card__footer">
+            {englishTags.length > 0 ? (
+              <div className="site-tag-list project-card__tags">
+                {englishTags.map((tag) => (
+                  <Tag key={tag} label={localizedProjectTagLabel(project, tag, lang)} />
+                ))}
+              </div>
+            ) : null}
+            {project.links.length > 0 ? (
+              <div className="site-link-chip-list project-card__links">
+                {project.links.map((link) => (
+                  <LinkChip key={link.href} link={link} githubStars={githubStars} />
+                ))}
+              </div>
+            ) : null}
+          </footer>
         ) : null}
       </div>
     </article>
@@ -150,21 +156,28 @@ export default function ProjectsPanel({ projects, githubStars }: ProjectsPanelPr
   const tags = useMemo(() => collectTags(projects), [projects]);
   const [activeTag, setActiveTag] = useState<string>(ALL_FILTER);
   const [page, setPage] = useState(0);
+  const effectiveActiveTag =
+    activeTag === ALL_FILTER || tags.includes(activeTag) ? activeTag : ALL_FILTER;
+
+  const tagFilterLabels = useMemo(
+    () => localizedProjectTagFilterLabels(projects, tags, lang),
+    [projects, tags, lang],
+  );
 
   const filterOptions = useMemo(
     () => [
       { value: ALL_FILTER, label: pick(lang, "All", "全部") },
-      ...tags.map((tag) => ({ value: tag, label: tag })),
+      ...tags.map((tag) => ({ value: tag, label: tagFilterLabels.get(tag) ?? tag })),
     ],
-    [tags, lang],
+    [tags, lang, tagFilterLabels],
   );
 
   const filteredProjects = useMemo(() => {
-    if (activeTag === ALL_FILTER) {
+    if (effectiveActiveTag === ALL_FILTER) {
       return projects;
     }
-    return projects.filter((project) => (project.tags ?? []).includes(activeTag));
-  }, [activeTag, projects]);
+    return projects.filter((project) => (project.tags ?? []).includes(effectiveActiveTag));
+  }, [effectiveActiveTag, projects]);
 
   const pageSize = gridColumns * PROJECT_GRID_MAX_ROWS;
   const totalPages = Math.max(1, Math.ceil(filteredProjects.length / pageSize));
@@ -188,7 +201,7 @@ export default function ProjectsPanel({ projects, githubStars }: ProjectsPanelPr
       {tags.length > 0 ? (
         <div className="projects-panel__toolbar">
           <SegmentedControl
-            value={activeTag}
+            value={effectiveActiveTag}
             options={filterOptions}
             onChange={handleTagChange}
             ariaLabel={pick(lang, "Filter projects by topic", "按主题筛选项目")}
@@ -200,29 +213,29 @@ export default function ProjectsPanel({ projects, githubStars }: ProjectsPanelPr
         <AnimatePresence mode="wait" initial={false}>
           {visibleProjects.length > 0 ? (
             <motion.ul
-              key={`project-grid-${activeTag}-${pageIndex}`}
+              key={`project-grid-${effectiveActiveTag}-${pageIndex}`}
               className="project-grid"
               layout
               initial={reduceMotion ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={reduceMotion ? undefined : { opacity: 0 }}
-            transition={{ duration: reduceMotion ? 0 : motionDuration.fast, ease: motionEase }}
-          >
-            <AnimatePresence mode="popLayout" initial={false}>
-              {visibleProjects.map((project, index) => (
-                <motion.li
-                  key={project.id}
-                  className="project-grid__item"
-                  layout
-                  initial={reduceMotion ? false : motionListEnter}
-                  animate={motionListShow}
-                  exit={
-                    reduceMotion
-                      ? undefined
-                      : { ...motionListExit, transition: { duration: motionDuration.fast } }
-                  }
-                  transition={motionListItemTransition(index, reduceMotion)}
-                >
+              transition={{ duration: reduceMotion ? 0 : motionDuration.fast, ease: motionEase }}
+            >
+              <AnimatePresence mode="popLayout" initial={false}>
+                {visibleProjects.map((project, index) => (
+                  <motion.li
+                    key={project.id}
+                    className="project-grid__item"
+                    layout
+                    initial={reduceMotion ? false : motionListEnter}
+                    animate={motionListShow}
+                    exit={
+                      reduceMotion
+                        ? undefined
+                        : { ...motionListExit, transition: { duration: motionDuration.fast } }
+                    }
+                    transition={motionListItemTransition(index, reduceMotion)}
+                  >
                     <ProjectCard project={project} githubStars={githubStars} />
                   </motion.li>
                 ))}
@@ -232,13 +245,13 @@ export default function ProjectsPanel({ projects, githubStars }: ProjectsPanelPr
             <motion.p
               key="empty"
               className="projects-panel__empty"
-            initial={reduceMotion ? false : motionRevealEnter}
-            animate={motionRevealShow}
-            exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
-            transition={{
-              duration: reduceMotion ? 0 : motionDuration.normal,
-              ease: motionEase,
-            }}
+              initial={reduceMotion ? false : motionRevealEnter}
+              animate={motionRevealShow}
+              exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
+              transition={{
+                duration: reduceMotion ? 0 : motionDuration.normal,
+                ease: motionEase,
+              }}
             >
               {pick(lang, "No projects match this filter.", "没有符合该筛选条件的项目。")}
             </motion.p>
