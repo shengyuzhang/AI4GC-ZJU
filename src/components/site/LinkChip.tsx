@@ -1,5 +1,5 @@
 import LinkBrandIcon, { detectLinkPlatform } from "@/components/site/LinkBrandIcon";
-import { formatStarCount, getGitHubStars, parseGitHubRepo } from "@/lib/github-stars";
+import { formatStarCount, getGitHubStars, isGitHubRepoRootHref } from "@/lib/github-stars";
 import { isMailtoLink } from "@/lib/content/member-email";
 import type { GitHubStarsMap } from "@/lib/github-stars";
 import type { LinkItem } from "@/types/lab";
@@ -19,7 +19,9 @@ function isExternalLink(href: string, external?: boolean): boolean {
 
 export default function LinkChip({ link, githubStars = {}, showIcon = false }: LinkChipProps) {
   const external = isExternalLink(link.href, link.external);
-  const stars = parseGitHubRepo(link.href) ? getGitHubStars(link.href, githubStars) : undefined;
+  const stars = isGitHubRepoRootHref(link.href)
+    ? getGitHubStars(link.href, githubStars)
+    : undefined;
   const hasIcon = showIcon && detectLinkPlatform(link.label, link.href) !== null;
 
   return (

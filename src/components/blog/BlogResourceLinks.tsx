@@ -1,4 +1,4 @@
-import { formatStarCount, getGitHubStars, parseGitHubRepo } from "@/lib/github-stars";
+import { formatStarCount, getGitHubStars, isGitHubRepoRootHref } from "@/lib/github-stars";
 import type { GitHubStarsMap } from "@/lib/github-stars";
 import type { BlogResourceKind, BlogResourceLink } from "@/types/lab";
 
@@ -75,7 +75,7 @@ export default function BlogResourceLinks({ links, githubStars = {} }: BlogResou
     <nav className="blog-resource-bar" aria-label="Paper resources and links">
       {links.map((link) => {
         const external = isExternal(link.href);
-        const stars = parseGitHubRepo(link.href)
+        const stars = isGitHubRepoRootHref(link.href)
           ? getGitHubStars(link.href, githubStars)
           : undefined;
         return (

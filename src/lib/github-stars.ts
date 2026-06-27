@@ -38,6 +38,27 @@ export function parseGitHubRepo(href: string): GitHubRepoRef | null {
   return { owner, repo };
 }
 
+/**
+ * True only for a bare repo-root link (`github.com/owner/repo`, no extra path or
+ * `#anchor`). Star badges attach to these; secondary links to the same repo
+ * (e.g. a `…#readme` doc link) should not duplicate the count.
+ */
+export function isGitHubRepoRootHref(href: string): boolean {
+  let url: URL;
+  try {
+    url = new URL(href);
+  } catch {
+    return false;
+  }
+
+  if (url.hash || url.hostname.replace(/^www\./, "") !== GITHUB_HOST) {
+    return false;
+  }
+
+  const segments = url.pathname.split("/").filter(Boolean);
+  return segments.length === 2 && parseGitHubRepo(href) !== null;
+}
+
 export function normalizeGitHubHref(href: string): string | null {
   const parsed = parseGitHubRepo(href);
   if (!parsed) {
