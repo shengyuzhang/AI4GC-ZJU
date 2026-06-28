@@ -26,6 +26,10 @@ My current research focuses on **GUI agent**, especially on edge–cloud collabo
 
 Feel free to reach out for collaborations.
 
+## Projects
+
+- **[paper2anything](https://quzhan51496.github.io/paper2anything/)** — An agent skills pack that turns an academic paper PDF into a presentation deck, conference poster, project homepage, Xiaohongshu post, or WeChat article. ([code](https://github.com/QuZhan51496/paper2anything))
+
 ## @papers Selected Papers
 
 - exptalkdiverseemotionalexpression2025

@@ -1,0 +1,21 @@
+date: Jun 2026
+title: paper2anything is open-source — turn any paper PDF into slides, a poster, a webpage, or social posts
+titleZh: paper2anything 开源：一篇论文 PDF，一键生成幻灯片、海报、网页与社媒内容
+type: Open Source
+typeZh: 开源
+desc: >-
+  We open-sourced paper2anything, an agent skills pack that turns an academic
+  paper PDF into a presentation deck, conference poster, project homepage,
+  Xiaohongshu post, or WeChat article — each generated end-to-end and ready to
+  share.
+descZh: 我们开源了 paper2anything：一个 agent 技能包，把一篇学术论文 PDF 端到端转成幻灯片、会议海报、项目主页、小红书帖子或公众号推文，产出即可直接发布。
+featured: true
+image: /home-assets/lab-projects/paper2anything.webp
+imageAlt: paper2anything — one paper PDF turned into slides, a poster, a webpage, and social-media covers
+links:
+  - label: GitHub
+    href: https://github.com/QuZhan51496/paper2anything
+    external: true
+  - label: Project Page
+    href: https://quzhan51496.github.io/paper2anything/
+    external: true

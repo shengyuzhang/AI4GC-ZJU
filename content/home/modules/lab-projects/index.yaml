@@ -102,3 +102,25 @@ items:
         href: https://github.com/YurunChen/repo-docs-skills
       - label: README
         href: https://github.com/YurunChen/repo-docs-skills#readme
+  - id: paper2anything
+    name: paper2anything
+    period: 2026–present
+    periodZh: 2026 至今
+    image: paper2anything.webp
+    imageAlt: paper2anything — one paper PDF turned into slides, a poster, a webpage, and social-media covers
+    desc: >-
+      An agent skills pack that turns an academic paper PDF into a presentation
+      deck, conference poster, project homepage, Xiaohongshu post, or WeChat
+      article — each generated end-to-end and ready to share.
+    descZh: 把一篇学术论文 PDF 端到端转成幻灯片、会议海报、项目主页、小红书帖子或公众号推文的 agent 技能包，产出即可直接发布。
+    tags:
+      - Agents
+      - Content Production
+    tagsZh:
+      - 智能体
+      - 内容创作
+    links:
+      - label: GitHub
+        href: https://github.com/QuZhan51496/paper2anything
+      - label: Project Page
+        href: https://quzhan51496.github.io/paper2anything/
