@@ -45,9 +45,15 @@ type GitHubRepoResponse = {
   html_url?: string;
 };
 
-/** First canonical GitHub repo-root link on a project, if any. */
-function projectRepoHref(project: HomeProject): string | undefined {
-  return project.links.find((link) => isGitHubRepoRootHref(link.href))?.href;
+/** Canonical GitHub repo-root keys on a project, in link order, deduped. */
+function projectRepoKeys(project: HomeProject): string[] {
+  const keys: string[] = [];
+  for (const link of project.links) {
+    if (!isGitHubRepoRootHref(link.href)) continue;
+    const key = normalizeGitHubHref(link.href);
+    if (key && !keys.includes(key)) keys.push(key);
+  }
+  return keys;
 }
 
 async function fetchRepo(owner: string, repo: string): Promise<GitHubRepoResponse | null> {
@@ -76,39 +82,52 @@ export async function enrichProjects(projects: HomeProject[]): Promise<ProjectsE
   const enrichment: Record<string, ProjectEnrichment> = {};
   const githubStars: Record<string, number> = {};
 
+  // Fetch every distinct repo once (a project like InfiGUI Series links several).
+  const repoData = new Map<string, GitHubRepoResponse>();
+  const allKeys = [...new Set(projects.flatMap(projectRepoKeys))];
   await Promise.all(
-    projects.map(async (project) => {
-      const href = projectRepoHref(project);
-      if (!href) {
-        return;
-      }
-      const ref = parseGitHubRepo(href);
-      if (!ref) {
-        return;
-      }
+    allKeys.map(async (key) => {
+      const ref = parseGitHubRepo(key);
+      if (!ref) return;
       const data = await fetchRepo(ref.owner, ref.repo);
-      if (!data) {
-        return;
-      }
-
-      const stars = typeof data.stargazers_count === "number" ? data.stargazers_count : undefined;
-      enrichment[project.id] = {
-        repoUrl: data.html_url ?? normalizeGitHubHref(href) ?? undefined,
-        stars,
-        description: data.description?.trim() || undefined,
-        language: data.language?.trim() || undefined,
-        topics: Array.isArray(data.topics) && data.topics.length > 0 ? data.topics.slice(0, 6) : undefined,
-        updatedAt: data.pushed_at || data.updated_at || undefined,
-        homepage: data.homepage?.trim() || undefined,
-        ownerAvatar: data.owner?.avatar_url || undefined,
-      };
-
-      const key = normalizeGitHubHref(href);
-      if (key && stars != null) {
-        githubStars[key] = stars;
+      if (!data) return;
+      repoData.set(key, data);
+      if (typeof data.stargazers_count === "number") {
+        // Star badge for each individual link chip (InfiGUIAgent / -R1 / -G1).
+        githubStars[key] = data.stargazers_count;
       }
     }),
   );
+
+  for (const project of projects) {
+    const keys = projectRepoKeys(project);
+    if (keys.length === 0) continue;
+
+    // Metadata (language/topics/updated/avatar/desc) comes from the first repo;
+    // the row's ★ total sums stars across all the project's repos.
+    const primary = repoData.get(keys[0]);
+    let starSum = 0;
+    let hasStars = false;
+    for (const key of keys) {
+      const count = repoData.get(key)?.stargazers_count;
+      if (typeof count === "number") {
+        starSum += count;
+        hasStars = true;
+      }
+    }
+
+    const topics = primary?.topics;
+    enrichment[project.id] = {
+      repoUrl: primary?.html_url ?? keys[0],
+      stars: hasStars ? starSum : undefined,
+      description: primary?.description?.trim() || undefined,
+      language: primary?.language?.trim() || undefined,
+      topics: Array.isArray(topics) && topics.length > 0 ? topics.slice(0, 6) : undefined,
+      updatedAt: primary?.pushed_at || primary?.updated_at || undefined,
+      homepage: primary?.homepage?.trim() || undefined,
+      ownerAvatar: primary?.owner?.avatar_url || undefined,
+    };
+  }
 
   return { enrichment, githubStars };
 }
