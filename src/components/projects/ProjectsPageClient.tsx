@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ContentSection from "@/components/layout/ContentSection";
 import ProjectRow from "@/components/projects/ProjectRow";
 import SegmentedControl from "@/components/site/SegmentedControl";
@@ -16,12 +16,15 @@ type ProjectsPageClientProps = {
   projects: HomeProject[];
   enrichment: Record<string, ProjectEnrichment>;
   githubStars: GitHubStarsMap;
+  /** When set (deep link /projects/{slug}), scroll that row to center + flash. */
+  focusSlug?: string;
 };
 
 export default function ProjectsPageClient({
   projects,
   enrichment,
   githubStars,
+  focusSlug,
 }: ProjectsPageClientProps) {
   const { lang } = useLang();
   const [activeTag, setActiveTag] = useState<string>(ALL_FILTER);
@@ -60,6 +63,31 @@ export default function ProjectsPageClient({
     { value: ALL_FILTER, label: pick(lang, "All", "全部") },
     ...tags.map((tag) => ({ value: tag, label: tagLabel(tag) })),
   ];
+
+  // Deep link /projects/{slug}: center the target row (visible by default since
+  // the filter starts on "All") and flash a brief highlight once it's laid out.
+  useEffect(() => {
+    if (!focusSlug) return;
+    let raf = 0;
+    let timeout = 0;
+    const focus = (remaining: number) => {
+      const target = document.getElementById(focusSlug);
+      if (!target) {
+        if (remaining > 0) raf = requestAnimationFrame(() => focus(remaining - 1));
+        return;
+      }
+      target.scrollIntoView({ behavior: "smooth", block: "center" });
+      target.classList.remove("project-row--flash");
+      void target.offsetWidth;
+      target.classList.add("project-row--flash");
+      timeout = window.setTimeout(() => target.classList.remove("project-row--flash"), 2600);
+    };
+    focus(40);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(timeout);
+    };
+  }, [focusSlug]);
 
   return (
     <main>

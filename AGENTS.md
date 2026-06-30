@@ -138,7 +138,8 @@ There is no `content/pages/` directory. Profile pages are the Markdown body in e
 | News pagination | `src/components/news/NewsPageClient.tsx` (`newsPageVisibleCount`) |
 | Projects pagination | `src/components/home/ProjectsPanel.tsx` (3 rows × responsive columns) |
 | Projects order (newest-first) | `src/lib/content/load-home.ts` → `parseProjects` reverses the YAML order (append new projects at the BOTTOM of `lab-projects/index.yaml`); applies to both homepage panel + `/projects` |
-| `/projects` full-row page | `src/app/projects/page.tsx`, `src/components/projects/ProjectsPageClient.tsx`, `src/components/projects/ProjectRow.tsx` |
+| `/projects` full-row page | `src/app/projects/page.tsx`, `src/components/projects/ProjectsPageClient.tsx`, `src/components/projects/ProjectRow.tsx`; shared project list in `src/lib/content/projects.ts` |
+| Project deep links | `src/app/projects/[slug]/page.tsx` (`/projects/{project-id}`) renders the list, centers + flashes that row via `focusSlug`; each row has `id={project.id}` + a centered copyable permalink chip |
 | Project GitHub auto-enrichment | `src/lib/projects/enrich.ts` — build-time fetch of stars/language/topics/last-push/homepage/avatar from the first repo-root link; graceful fallback to authored content |
 
 ## Editing rules

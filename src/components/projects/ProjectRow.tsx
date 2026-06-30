@@ -51,6 +51,20 @@ function formatMonthYear(iso: string): string | undefined {
 export default function ProjectRow({ project, enrichment, githubStars }: ProjectRowProps) {
   const { lang } = useLang();
   const [imageFailed, setImageFailed] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const permalinkPath = `/projects/${project.id}`;
+  const copyPermalink = async () => {
+    const url =
+      typeof window !== "undefined" ? `${window.location.origin}${permalinkPath}` : permalinkPath;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1600);
+    } catch {
+      // Clipboard unavailable (e.g. insecure context) — no-op.
+    }
+  };
 
   const desc = pick(lang, project.desc, project.descZh) || enrichment?.description;
   const period = pick(lang, project.period, project.periodZh);
@@ -63,7 +77,7 @@ export default function ProjectRow({ project, enrichment, githubStars }: Project
   const hasStats = Boolean(language) || stars != null || Boolean(updated);
 
   return (
-    <article className="project-row">
+    <article className="project-row" id={project.id}>
       <div className={cn("project-row__visual", !imageSrc && "project-row__visual--fallback")}>
         {imageSrc ? (
           // eslint-disable-next-line @next/next/no-img-element -- source may be a remote GitHub avatar
@@ -133,6 +147,35 @@ export default function ProjectRow({ project, enrichment, githubStars }: Project
             ))}
           </div>
         ) : null}
+      </div>
+
+      <div className="project-row__permalink">
+        <button
+          type="button"
+          className="project-row__permalink-btn"
+          onClick={copyPermalink}
+          aria-label={pick(lang, `Copy link to ${project.name}`, `复制 ${project.name} 的链接`)}
+        >
+          <svg
+            className="project-row__permalink-icon"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.9"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+            <path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+          </svg>
+          <span className="project-row__permalink-path">{permalinkPath}</span>
+          <span className="project-row__permalink-status">
+            {copied ? pick(lang, "Copied", "已复制") : pick(lang, "Copy", "复制")}
+          </span>
+        </button>
       </div>
     </article>
   );
