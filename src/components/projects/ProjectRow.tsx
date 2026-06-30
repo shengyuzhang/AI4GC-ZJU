@@ -140,42 +140,57 @@ export default function ProjectRow({ project, enrichment, githubStars }: Project
           </div>
         ) : null}
 
-        {project.links.length > 0 ? (
-          <div className="site-link-chip-list project-row__links">
-            {project.links.map((link) => (
-              <LinkChip key={link.href} link={link} githubStars={githubStars} showIcon />
-            ))}
-          </div>
-        ) : null}
-      </div>
-
-      <div className="project-row__permalink">
-        <button
-          type="button"
-          className="project-row__permalink-btn"
-          onClick={copyPermalink}
-          aria-label={pick(lang, `Copy link to ${project.name}`, `复制 ${project.name} 的链接`)}
-        >
-          <svg
-            className="project-row__permalink-icon"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.9"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
+        <div className="project-row__actions">
+          {project.links.length > 0 ? (
+            <div className="site-link-chip-list project-row__links">
+              {project.links.map((link) => (
+                <LinkChip key={link.href} link={link} githubStars={githubStars} showIcon />
+              ))}
+            </div>
+          ) : null}
+          <button
+            type="button"
+            className={cn("project-row__copy-btn", copied && "project-row__copy-btn--done")}
+            onClick={copyPermalink}
+            aria-label={pick(lang, `Copy link to ${project.name}`, `复制 ${project.name} 的链接`)}
+            title={
+              copied
+                ? pick(lang, "Link copied", "已复制链接")
+                : pick(lang, "Copy link to this project", "复制该项目链接")
+            }
           >
-            <path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-            <path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-          </svg>
-          <span className="project-row__permalink-path">{permalinkPath}</span>
-          <span className="project-row__permalink-status">
-            {copied ? pick(lang, "Copied", "已复制") : pick(lang, "Copy", "复制")}
-          </span>
-        </button>
+            {copied ? (
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.1"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+            ) : (
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.9"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                <path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+              </svg>
+            )}
+          </button>
+        </div>
       </div>
     </article>
   );

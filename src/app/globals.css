@@ -2207,7 +2207,7 @@ article.member-card.member-card--has-profile {
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
-  gap: var(--space-2) var(--space-5);
+  gap: var(--space-5);
   padding: var(--space-4);
   border: 1px solid color-mix(in srgb, var(--color-divider) 70%, transparent);
   border-radius: var(--radius-xl);
@@ -2338,61 +2338,50 @@ article.member-card.member-card--has-profile {
   padding: 0;
 }
 
-.project-row__links {
+/* Footer action row: link chips + a discreet copy-deep-link icon button */
+.project-row__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
   margin-top: auto;
   padding-top: var(--space-1);
 }
 
-/* Centered, copyable deep-link permalink: /projects/{slug} */
-.project-row__permalink {
-  grid-column: 1 / -1;
-  display: flex;
-  justify-content: center;
-  margin-top: var(--space-1);
-  padding-top: var(--space-3);
-  border-top: 1px solid color-mix(in srgb, var(--color-divider) 55%, transparent);
+.project-row__actions .project-row__links {
+  margin: 0;
 }
 
-.project-row__permalink-btn {
+.project-row__copy-btn {
+  flex-shrink: 0;
+  margin-left: auto;
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.28rem 0.7rem;
-  border: 1px solid color-mix(in srgb, var(--color-divider) 70%, transparent);
-  border-radius: var(--radius-2xl);
-  background: color-mix(in srgb, var(--color-surface) 60%, transparent);
-  color: var(--color-muted-text);
-  font-size: var(--text-xs);
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  color: color-mix(in srgb, var(--color-muted-text) 70%, transparent);
   cursor: pointer;
   transition:
-    border-color 0.18s var(--ease-out),
     color 0.18s var(--ease-out),
+    border-color 0.18s var(--ease-out),
     background 0.18s var(--ease-out);
 }
 
-.project-row__permalink-btn:hover,
-.project-row__permalink-btn:focus-visible {
-  border-color: color-mix(in srgb, var(--color-brand) 42%, var(--color-divider));
-  color: var(--color-page-text);
-  background: color-mix(in srgb, var(--color-brand) 7%, transparent);
+.project-row__copy-btn:hover,
+.project-row__copy-btn:focus-visible {
+  color: var(--color-brand);
+  border-color: color-mix(in srgb, var(--color-brand) 32%, var(--color-divider));
+  background: color-mix(in srgb, var(--color-brand) 8%, transparent);
 }
 
-.project-row__permalink-icon {
-  flex-shrink: 0;
-  color: var(--color-brand-muted);
-}
-
-.project-row__permalink-path {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  letter-spacing: -0.01em;
-}
-
-.project-row__permalink-status {
-  padding-left: 0.4rem;
-  margin-left: 0.1rem;
-  border-left: 1px solid color-mix(in srgb, var(--color-divider) 60%, transparent);
-  font-weight: 600;
-  color: var(--color-brand-muted);
+.project-row__copy-btn--done,
+.project-row__copy-btn--done:hover {
+  color: #16a34a;
+  border-color: color-mix(in srgb, #16a34a 36%, transparent);
+  background: color-mix(in srgb, #16a34a 10%, transparent);
 }
 
 .project-row--flash::after {
@@ -2430,10 +2419,6 @@ article.member-card.member-card--has-profile {
 
   .project-row__visual {
     aspect-ratio: 16 / 9;
-  }
-
-  .project-row__permalink-path {
-    word-break: break-all;
   }
 }
 
