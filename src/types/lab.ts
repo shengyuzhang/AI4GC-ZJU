@@ -259,6 +259,7 @@ export type SitePages = {
   team: PageHero;
   news: PageHero;
   publications: PageHero;
+  projects: PageHero;
   blog: PageHero;
 };
 

@@ -66,7 +66,7 @@ function parseProjects(raw: unknown, moduleId?: string): HomeProject[] {
     return [];
   }
 
-  return raw.map((item, index) => {
+  const projects = raw.map((item, index) => {
     const record = item as Record<string, unknown>;
     return homeProjectSchema.parse({
       ...record,
@@ -78,6 +78,11 @@ function parseProjects(raw: unknown, moduleId?: string): HomeProject[] {
       ),
     });
   });
+
+  // Projects are authored oldest→newest (each new project is appended to the
+  // YAML). Display newest first everywhere (homepage panel + /projects) so the
+  // most recently submitted work leads.
+  return projects.reverse();
 }
 
 function parsePartners(raw: unknown, moduleId?: string): HomePartner[] {

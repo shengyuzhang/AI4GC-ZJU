@@ -1,5 +1,7 @@
 # Chinese fields (titleZh / descZh / periodZh / tagsZh) are shown when the site language is 中文.
 # Keep tagsZh aligned 1:1 with tags so topic filtering stays consistent.
+# Order: append each new project at the BOTTOM. The site displays projects
+# newest-first (most recently added leads) on both the homepage and /projects.
 type: projects
 title: Projects
 titleZh: 研究项目
@@ -17,11 +19,9 @@ items:
       InfiGUI-G1 — stronger GUI grounding through adaptive exploration policy optimization.
     descZh: 面向电脑操作的轻量级 GUI 智能体家族，迭代演进出三项工作：InfiGUIAgent 内建推理与反思机制，是具备通用能力的多模态智能体；InfiGUI-R1 借助强化学习，从被动执行迈向主动推理；InfiGUI-G1 则通过自适应探索的策略优化，显著提升界面定位精度。
     tags:
-      - GUI Agents
-      - Multimodal
+      - Computer Use
     tagsZh:
-      - GUI 智能体
-      - 多模态
+      - 电脑操作
     links:
       - label: InfiGUIAgent
         href: https://github.com/InfiXAI/InfiGUIAgent
@@ -43,11 +43,9 @@ items:
     tags:
       - Computer Use
       - Benchmark
-      - Agents
     tagsZh:
       - 电脑操作
       - 基准测试
-      - 智能体
     links:
       - label: GitHub
         href: https://github.com/mrwwk/DeskCraft
@@ -66,11 +64,9 @@ items:
       generation runs.
     descZh: 开源的 AI 视频制作助手，可将通用智能体转化为专业的视频制作专家：在进入高成本的生成环节之前，依次完成需求澄清、方案确认、素材生成、合成与审校。
     tags:
-      - Content Production
-      - Agents
+      - AIGC
     tagsZh:
-      - 内容创作
-      - 智能体
+      - AIGC
     links:
       - label: GitHub
         href: https://github.com/video-production-buddy/video-production-buddy
@@ -92,11 +88,9 @@ items:
       中随代码同步维护 walkthrough、概念页、术语表、变更记录与 agent
       规则，帮助读者沿真实路径读懂代码、把握设计。
     tags:
-      - Agents
-      - Developer Tools
+      - Computer Use
     tagsZh:
-      - 智能体
-      - 开发者工具
+      - 电脑操作
     links:
       - label: GitHub
         href: https://github.com/YurunChen/repo-docs-skills
@@ -114,11 +108,9 @@ items:
       article — each generated end-to-end and ready to share.
     descZh: 把一篇学术论文 PDF 端到端转成幻灯片、会议海报、项目主页、小红书帖子或公众号推文的 agent 技能包，产出即可直接发布。
     tags:
-      - Agents
-      - Content Production
+      - AIGC
     tagsZh:
-      - 智能体
-      - 内容创作
+      - AIGC
     links:
       - label: GitHub
         href: https://github.com/QuZhan51496/paper2anything

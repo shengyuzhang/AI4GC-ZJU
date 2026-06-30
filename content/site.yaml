@@ -40,6 +40,9 @@ nav:
   - label: Publications
     labelZh: 论文
     href: /publications
+  - label: Projects
+    labelZh: 项目
+    href: /projects
   - label: Team
     labelZh: 团队
     href: /team
@@ -66,6 +69,8 @@ pages:
     title: Blog
   publications:
     title: Publications
+  projects:
+    title: Projects
 
 team:
   openings: >-

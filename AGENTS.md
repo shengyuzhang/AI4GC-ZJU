@@ -78,6 +78,7 @@ content/
 | `/` | `content/home/` |
 | `/news` | `content/news/` |
 | `/publications` | `content/publications.bib` |
+| `/projects` | `content/home/modules/lab-projects/` (same module as the homepage panel) |
 | `/team` | `content/team/` |
 | `/blog` | `content/blog/` |
 | `/blog/{post-folder}` | blog post `index.md` body |
@@ -136,6 +137,9 @@ There is no `content/pages/` directory. Profile pages are the Markdown body in e
 | Tests | `src/lib/content/resolve-profile-papers.test.ts`, `src/lib/content/slug.test.ts`, `src/lib/publications-utils.test.ts`, `src/lib/security/headers.test.ts` |
 | News pagination | `src/components/news/NewsPageClient.tsx` (`newsPageVisibleCount`) |
 | Projects pagination | `src/components/home/ProjectsPanel.tsx` (3 rows × responsive columns) |
+| Projects order (newest-first) | `src/lib/content/load-home.ts` → `parseProjects` reverses the YAML order (append new projects at the BOTTOM of `lab-projects/index.yaml`); applies to both homepage panel + `/projects` |
+| `/projects` full-row page | `src/app/projects/page.tsx`, `src/components/projects/ProjectsPageClient.tsx`, `src/components/projects/ProjectRow.tsx` |
+| Project GitHub auto-enrichment | `src/lib/projects/enrich.ts` — build-time fetch of stars/language/topics/last-push/homepage/avatar from the first repo-root link; graceful fallback to authored content |
 
 ## Editing rules
 

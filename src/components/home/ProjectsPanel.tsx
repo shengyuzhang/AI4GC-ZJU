@@ -10,6 +10,7 @@ import { pick, useLang } from "@/lib/i18n/language-context";
 import {
   localizedProjectTagFilterLabels,
   localizedProjectTagLabel,
+  sortProjectTags,
 } from "@/lib/i18n/localize-home";
 import { cn } from "@/lib/utils";
 import { getInitials } from "@/lib/initials";
@@ -77,7 +78,7 @@ function collectTags(projects: HomeProject[]): string[] {
       tags.add(tag);
     }
   }
-  return Array.from(tags).sort((a, b) => a.localeCompare(b));
+  return sortProjectTags(Array.from(tags));
 }
 
 type ProjectCardProps = {

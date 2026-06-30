@@ -81,6 +81,20 @@ export function localizedProjectTags(project: HomeProject, lang: Lang): string[]
   return (project.tags ?? []).map((tag) => localizedProjectTagLabel(project, tag, lang));
 }
 
+/** Preferred project-topic order for filters; unlisted tags fall back to A→Z. */
+const PROJECT_TAG_ORDER = ["Computer Use", "AIGC", "Benchmark"];
+
+export function sortProjectTags(tags: string[]): string[] {
+  return [...tags].sort((a, b) => {
+    const ia = PROJECT_TAG_ORDER.indexOf(a);
+    const ib = PROJECT_TAG_ORDER.indexOf(b);
+    if (ia !== -1 && ib !== -1) return ia - ib;
+    if (ia !== -1) return -1;
+    if (ib !== -1) return 1;
+    return a.localeCompare(b);
+  });
+}
+
 export function localizedProjectTagFilterLabels(
   projects: HomeProject[],
   filterTags: string[],

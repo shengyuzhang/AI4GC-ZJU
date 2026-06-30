@@ -384,6 +384,7 @@ export const sitePagesSchema = z.object({
   team: pageHeroSchema.default({ title: "Team" }),
   news: pageHeroSchema.default({ title: "News" }),
   publications: pageHeroSchema.default({ title: "Publications" }),
+  projects: pageHeroSchema.default({ title: "Projects" }),
   blog: pageHeroSchema.default({ title: "Blog" }),
 });
 
@@ -418,6 +419,7 @@ export const siteConfigSchema = z.object({
     team: { title: "Team" },
     news: { title: "News" },
     publications: { title: "Publications" },
+    projects: { title: "Projects" },
     blog: { title: "Blog" },
   }),
   team: z.object({
