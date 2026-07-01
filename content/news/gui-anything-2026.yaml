@@ -1,0 +1,23 @@
+date: Jul 2026
+title: GUI-Anything is open-source — a flight recorder for long Claude Code sessions
+titleZh: GUI-Anything 开源：长 Claude Code 会话的飞行记录仪
+type: Open Source
+typeZh: 开源
+desc: >-
+  We open-sourced GUI-Anything, a sidecar Flow Observer for Claude Code that
+  watches live session streams, visualizes explorations as timelines and
+  flowcharts, and brings local wiki context back on demand without interrupting
+  the coding flow.
+descZh: >-
+  我们开源了 GUI-Anything：面向 Claude Code 的 sidecar Flow Observer，实时观察会话流，将探索过程可视化为时间线与流程图，并按需带回本地
+  wiki 上下文，同时不打断编码流程。
+featured: true
+image: /home-assets/lab-projects/gui-anything.png
+imageAlt: GUI-Anything sidecar observer for long Claude Code sessions
+links:
+  - label: GitHub
+    href: https://github.com/YurunChen/GUI-Anything
+    external: true
+  - label: Project Page
+    href: https://yurunchen.github.io/GUI-Anything/
+    external: true

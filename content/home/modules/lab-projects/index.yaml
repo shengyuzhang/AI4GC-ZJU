@@ -116,3 +116,26 @@ items:
         href: https://github.com/QuZhan51496/paper2anything
       - label: Project Page
         href: https://quzhan51496.github.io/paper2anything/
+  - id: gui-anything
+    name: GUI-Anything
+    period: 2026–present
+    periodZh: 2026 至今
+    image: gui-anything.png
+    imageAlt: GUI-Anything sidecar observer for long Claude Code sessions
+    desc: >-
+      A sidecar Flow Observer for long Claude Code sessions. Claude Code stays
+      native in the left pane while the right pane maps session streams into
+      timelines, flowcharts, summaries, and reusable local wiki memory.
+    descZh: >-
+      面向长 Claude Code 会话的 sidecar Flow Observer：左侧保持原生 Claude Code
+      工作流，右侧把 session 流整理成时间线、流程图、摘要与可复用的本地 wiki
+      记忆。
+    tags:
+      - Computer Use
+    tagsZh:
+      - 电脑操作
+    links:
+      - label: GitHub
+        href: https://github.com/YurunChen/GUI-Anything
+      - label: Project Page
+        href: https://yurunchen.github.io/GUI-Anything/
