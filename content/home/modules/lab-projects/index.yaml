@@ -55,7 +55,7 @@ items:
     name: Video Production Buddy
     period: 2026–present
     periodZh: 2026 至今
-    image: video-production-buddy.gif
+    image: video-production-buddy.webp
     imageAlt: Video Production Buddy
     desc: >-
       An open-source AI video production assistant that turns general-purpose

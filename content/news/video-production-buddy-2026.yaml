@@ -10,7 +10,7 @@ desc: >-
   runs.
 descZh: 我们开源了 Video Production Buddy——一个将通用智能体转化为视频制作专家的 AI 工作室：在进入高成本生成环节之前，依次完成需求引导、方案确认、素材生成、合成与审校。
 featured: true
-image: /home-assets/lab-projects/video-production-buddy.gif
+image: /home-assets/lab-projects/video-production-buddy.webp
 imageAlt: Video Production Buddy AI video production studio
 links:
   - label: GitHub
