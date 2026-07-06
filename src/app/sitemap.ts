@@ -7,7 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const base = getSiteUrl();
   const now = new Date();
 
-  const staticPaths = ["/", "/news", "/publications", "/team", "/blog"];
+  const staticPaths = ["/", "/news", "/publications", "/projects", "/team", "/blog"];
   const profilePaths = listIndexableMemberProfileSlugs().map((slug) => `/${slug}`);
   const blogPaths = listBlogPostSlugs().map((slug) => `/blog/${slug}`);
 
