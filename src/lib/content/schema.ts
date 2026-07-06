@@ -213,6 +213,7 @@ export const homeProjectSchema = z.object({
   periodZh: z.string().optional(),
   image: z.string().optional(),
   imageAlt: z.string().optional(),
+  imageFit: z.enum(["cover", "contain"]).optional(),
   tags: z.array(z.string()).default([]),
   tagsZh: z.array(z.string()).optional(),
   links: z.array(linkItemSchema).default([]),

@@ -82,7 +82,10 @@ export default function ProjectRow({ project, enrichment, githubStars }: Project
         {imageSrc ? (
           // eslint-disable-next-line @next/next/no-img-element -- source may be a remote GitHub avatar
           <img
-            className="project-row__cover"
+            className={cn(
+              "project-row__cover",
+              project.imageFit === "contain" && "project-row__cover--contain",
+            )}
             src={imageSrc}
             alt={project.imageAlt ?? `${project.name} preview`}
             loading="lazy"

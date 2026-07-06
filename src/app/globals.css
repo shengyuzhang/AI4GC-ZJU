@@ -2073,6 +2073,11 @@ article.member-card.member-card--has-profile {
   object-position: center;
 }
 
+/* Wide/tall art shown in full (letterboxed) instead of cropped to fill. */
+.project-card__cover--contain {
+  object-fit: contain;
+}
+
 .project-card__visual--fallback {
   display: flex;
   align-items: center;
@@ -2240,6 +2245,11 @@ article.member-card.member-card--has-profile {
   height: 100%;
   object-fit: cover;
   object-position: center;
+}
+
+/* Wide/tall art shown in full (letterboxed) instead of cropped to fill. */
+.project-row__cover--contain {
+  object-fit: contain;
 }
 
 .project-row__visual--fallback {

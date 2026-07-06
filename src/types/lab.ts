@@ -201,6 +201,9 @@ export type HomeProject = {
   periodZh?: string;
   image?: string;
   imageAlt?: string;
+  /** How the image fills its card frame. Default "cover" (crop to fill); use
+   *  "contain" for wide/tall art that must be shown in full (letterboxed). */
+  imageFit?: "cover" | "contain";
   tags?: string[];
   tagsZh?: string[];
   links: LinkItem[];

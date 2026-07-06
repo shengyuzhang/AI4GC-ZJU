@@ -57,6 +57,8 @@ items:
     periodZh: 2026 至今
     image: video-production-buddy.webp
     imageAlt: Video Production Buddy
+    # 2.5:1 demo clip — show it in full (letterboxed) instead of cropping the sides.
+    imageFit: contain
     desc: >-
       An open-source AI video production assistant that turns general-purpose
       agents into video production experts, with brief clarification, proposal
