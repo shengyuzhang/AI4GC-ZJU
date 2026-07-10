@@ -1,0 +1,14 @@
+date: Jul 2026
+title: Three papers accepted to ACM MM 2026
+titleZh: 三篇论文被 ACM MM 2026 接收
+type: Paper
+typeZh: 论文
+desc: >-
+  VertiKV, PruneVAR, and SafePred are accepted to ACM MM 2026 — on
+  vertical-integrity KV-cache compression for efficient multimodal long-context
+  inference, training-free acceleration of visual autoregressive generation, and
+  world-model predictive guardrails for computer-using agents, respectively.
+descZh: VertiKV、PruneVAR、SafePred 三篇论文被 ACM MM 2026 接收，分别聚焦高效多模态长上下文推理的 KV 缓存压缩、免训练的视觉自回归生成加速，以及面向电脑操作智能体的世界模型预测式安全护栏。
+featured: true
+image: /content-assets/acmmm/acm-mm-2026.png
+imageAlt: ACM Multimedia 2026 logo
