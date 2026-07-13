@@ -4,13 +4,13 @@ name: Tianyu Zhan
 photo: photo.jpg
 bio: >-
   Master's student researching generative recommendation and search, with
-  interests in semantic identifier construction and edge-cloud collaborative
+  interests in semantic identifier construction and device-cloud collaborative
   systems for efficient retrieval.
 tags:
   - Generative Recommendation
   - Generative Search
   - Semantic Identifier
-  - Edge-Cloud Collaboration
+  - Device-Cloud Collaboration
 email: yuzt@zju.edu.cn
 profile: true
 links:
@@ -23,12 +23,12 @@ links:
 
 Hi! I'm **Tianyu Zhan**, a master's student at AI4GC Lab, Zhejiang University, advised by Shengyu Zhang and Jiwei Li. I am a recipient of the National Scholarship.
 
-My research focuses on generative recommendation and search systems. I have published five CCF-A papers (3 as first author), with oral presentations at IJCAI 2025 and KDD 2025. Previously, I worked on edge-cloud collaborative recommendation and training efficiency for generative recommendation models. I am currently interning at the Taobao-Tmall main search team, exploring semantic identifier (SID) construction for generative search.
+My research focuses on generative recommendation and search systems. I have published five CCF-A papers (3 as first author), with oral presentations at IJCAI 2025 and KDD 2025. Previously, I worked on device-cloud collaborative recommendation and training efficiency for generative recommendation models. I am currently interning at the Taobao-Tmall main search team, exploring semantic identifier (SID) construction for generative search.
 
 ## Research Interests
 - **Generative Recommendation** — Training efficiency and model design for generative recommendation systems, including semantic identifier construction and token-level pruning.
 - **Generative Search & SID** — Semantic identifier construction for generative retrieval in large-scale industrial search.
-- **Edge-Cloud Collaboration** — Efficient co-optimization of recommendation models across edge and cloud environments, balancing latency, generalization, and resource constraints.
+- **Device-Cloud Collaboration** — Efficient co-optimization of recommendation models across device and cloud environments, balancing latency, generalization, and resource constraints.
 
 ## Education
 

@@ -3,7 +3,7 @@ name: Zhan Qu
 startDate: 2024
 photo: photo.jpg
 bio: >-
-  Ph.D. student working on edge-cloud collaborative GUI Agent, Multi-Agent Systems and 3D Digital Human.
+  Ph.D. student working on device-cloud collaborative GUI Agent, Multi-Agent Systems and 3D Digital Human.
 tags:
   - GUI Agent
   - Multi-Agent Systems
@@ -22,7 +22,7 @@ links:
 
 Hi! I'm **Zhan Qu**, a Ph.D. student from AI4GC Lab at Zhejiang University, advised by Shengyu Zhang.
 
-My current research focuses on **GUI agent**, especially on edge–cloud collaboration: enabling lightweight on-device agents to perform robust GUI grounding and to autonomously decide when to request help from stronger cloud models at low cost. Previously, I worked on multi-agent collaboration and on the driving and rendering of 3D digital humans.
+My current research focuses on **GUI agent**, especially on device-cloud collaboration: enabling lightweight on-device agents to perform robust GUI grounding and to autonomously decide when to request help from stronger cloud models at low cost. Previously, I worked on multi-agent collaboration and on the driving and rendering of 3D digital humans.
 
 Feel free to reach out for collaborations.
 
