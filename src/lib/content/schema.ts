@@ -32,7 +32,7 @@ export const newsItemSchema = z.object({
   date: z.string(),
   title: z.string(),
   titleZh: z.string().optional(),
-  desc: z.string(),
+  desc: z.string().optional(),
   descZh: z.string().optional(),
   href: z.string().optional(),
   featured: z.boolean().optional(),

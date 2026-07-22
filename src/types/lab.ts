@@ -27,7 +27,7 @@ export type NewsItem = {
   date: string;
   title: string;
   titleZh?: string;
-  desc: string;
+  desc?: string;
   descZh?: string;
   href?: string;
   featured?: boolean;
