@@ -1,0 +1,17 @@
+date: Jul 2026
+title: SPECTRA accepted to ACM MM 2026
+titleZh: SPECTRA 被 ACM MM 2026 接收
+type: Paper
+typeZh: 论文
+desc: >-
+  SPECTRA lets lightweight on-device GUI agents autonomously decide when to request cloud assistance by stress testing visual cognition and analyzing latent trajectories. It retains 95.60% of cloud-only grounding performance at a 39.24% average request rate, without autoregressive decoding for request assessment.
+descZh: SPECTRA 通过视觉认知压力测试与潜在轨迹分析，让轻量级端侧 GUI 智能体自主判断何时请求云端协助；在 39.24% 的平均请求率下可保持纯云端方案 95.60% 的定位性能，且请求评估无需自回归解码。
+featured: true
+image: /blog-assets/spectra-acm-mm-2026/framework.png
+imageAlt: Overview of the proposed SPECTRA
+links:
+  - label: Blog
+    href: /blog/spectra-acm-mm-2026
+  - label: Paper
+    href: https://doi.org/10.1145/3767308.3836048
+    external: true
