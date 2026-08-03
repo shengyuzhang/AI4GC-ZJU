@@ -1,14 +1,14 @@
 import type { LinkItem, NewsItem } from "@/types/lab";
 
-/** Paper / Project chips — falls back to legacy `href` as Paper. */
+/**
+ * Resource chips shown under a news item.
+ *
+ * `href` drives only the clickable title (see NewsListItem); it is NOT turned
+ * into a chip. Use explicit `links` for buttons — that way a title-only item
+ * can link its title without also rendering a redundant "Paper" button.
+ */
 export function getNewsLinks(item: NewsItem): LinkItem[] {
-  if (item.links.length > 0) {
-    return item.links;
-  }
-  if (item.href) {
-    return [{ label: "Paper", href: item.href }];
-  }
-  return [];
+  return item.links;
 }
 
 export function resolveHeroFeaturedNews(
