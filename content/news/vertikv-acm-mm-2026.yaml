@@ -1,0 +1,19 @@
+date: Jul 2026
+title: VertiKV accepted to ACM MM 2026
+titleZh: VertiKV 被 ACM MM 2026 接收
+type: Paper
+typeZh: 论文
+desc: >-
+  VertiKV preserves vertical token-refinement paths during structured KV-cache
+  compression, delivering 1.2–1.9× decoding speedup and an 80–95% reduction in
+  KV-cache memory while maintaining multimodal long-context performance.
+descZh: VertiKV 在结构化 KV 缓存压缩中保持 token 跨层垂直精炼路径，在维持多模态长上下文任务性能的同时，实现 1.2–1.9 倍解码加速与 80–95% 的 KV 缓存内存缩减。
+featured: true
+image: /blog-assets/vertikv-acm-mm-2026/framework.png
+imageAlt: Overview of the VertiKV structured KV-cache compression framework
+links:
+  - label: Blog
+    href: /blog/vertikv-acm-mm-2026
+  - label: Paper
+    href: https://doi.org/10.1145/3767308.3835781
+    external: true
