@@ -25,7 +25,7 @@ profile: true
 
 Hi! I'm **Yufan Xiong**, a research intern at AI4GC Lab, Zhejiang University. I am also fortunate to conduct research on on-device model post-training at Taobao & Tmall Group, Alibaba. I will begin my M.S. at the School of Artificial Intelligence and Data Science (AIDS), University of Science and Technology of China (USTC) in 2026.
 
-My research has centered on **efficient inference for large language models and multimodal LLMs**, especially **KV cache compression** and **long-context acceleration** — making large models faster and more memory-efficient without sacrificing accuracy. Our recent work, **[VertiKV](/blog/vertikv-acm-mm-2026)**, preserves cross-layer token-refinement paths during structured KV-cache compression and has been accepted to **ACM MM 2026**. I am now moving toward **CLI agents**. I am open to collaborations on efficient inference and agent research.
+My research has centered on **efficient inference for large language models and multimodal LLMs**, especially **KV cache compression** and **long-context acceleration** — making large models faster and more memory-efficient without sacrificing accuracy. I am now moving toward **CLI agents**. I am open to collaborations on efficient inference and agent research.
 
 ## Research Directions
 
