@@ -33,6 +33,10 @@ My research has centered on **efficient inference for large language models and 
 - **KV Cache Compression** — structured eviction and merging strategies that preserve cross-layer and cross-modal information rather than treating tokens independently.
 - **Long-Context Inference** — extending usable context length (up to the million-token regime) while controlling memory growth and positional-encoding extrapolation, including on-device deployment.
 
+## Projects
+
+- **[GUI-Anything](https://yurunchen.github.io/GUI-Anything/)** — A sidecar Flow Observer for long Claude Code sessions that maps live session streams into timelines, flowcharts, summaries, and reusable local wiki memory without interrupting the coding flow. Co-developed with **[Yurun Chen](/yurun-chen-2025-12551024)**. ([code](https://github.com/YurunChen/GUI-Anything))
+
 ## @papers Selected Papers
 
 @bib publications
