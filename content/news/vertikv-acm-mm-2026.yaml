@@ -14,6 +14,3 @@ imageAlt: Overview of the VertiKV structured KV-cache compression framework
 links:
   - label: Blog
     href: /blog/vertikv-acm-mm-2026
-  - label: Paper
-    href: https://doi.org/10.1145/3767308.3835781
-    external: true

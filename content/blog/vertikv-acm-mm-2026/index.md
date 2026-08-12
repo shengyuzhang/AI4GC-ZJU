@@ -2,9 +2,6 @@
 title: 'VertiKV: Vertical-Integrity KV Cache Compression for Efficient Multimodal Long-Context Inference'
 date: Jul 2026
 authorId: yufan-xiong-2025
-links:
-  - kind: paper
-    href: https://doi.org/10.1145/3767308.3835781
 desc: >-
   VertiKV preserves cross-layer token-refinement paths with vertically aligned
   eviction and top-down information enhancement, enabling efficient multimodal
@@ -75,7 +72,3 @@ At the most aggressive setting, VertiKV cuts measured KV-cache GPU memory from *
 ## Takeaway
 
 KV-cache compression is not only a token-ranking problem; it is also a structural problem across network depth. VertiKV preserves the local vertical integrity of critical refinement paths with VASE, then uses TDIE to transfer residual semantics into the retained cache. This combination makes aggressive compression practical for multimodal long-context inference without additional training.
-
-## Further reading
-
-- Paper: [VertiKV (ACM MM 2026)](https://doi.org/10.1145/3767308.3835781)
