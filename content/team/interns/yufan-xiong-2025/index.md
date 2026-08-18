@@ -27,16 +27,21 @@ Hi! I'm **Yufan Xiong**, a research intern at AI4GC Lab, Zhejiang University. I 
 
 My research has centered on **efficient inference for large language models and multimodal LLMs**, especially **KV cache compression** and **long-context acceleration** — making large models faster and more memory-efficient without sacrificing accuracy. I am now moving toward **CLI agents**. I am open to collaborations on efficient inference and agent research.
 
-
-
 ## Research Directions
 
 - **CLI Agents** — building and improving agents that operate through command-line and computer interfaces to carry out real tasks.
 - **KV Cache Compression** — structured eviction and merging strategies that preserve cross-layer and cross-modal information rather than treating tokens independently.
 - **Long-Context Inference** — extending usable context length (up to the million-token regime) while controlling memory growth and positional-encoding extrapolation, including on-device deployment.
 
+## Projects
+
+- **[GUI-Anything](https://yurunchen.github.io/GUI-Anything/)** — A sidecar Flow Observer for long Claude Code sessions that maps live session streams into timelines, flowcharts, summaries, and reusable local wiki memory without interrupting the coding flow. Co-developed with **[Yurun Chen](/yurun-chen-2025-12551024)**. ([code](https://github.com/YurunChen/GUI-Anything))
+
 ## @papers Selected Papers
 
 @bib publications
 
+- vertikvverticalintegritykv2026
 - retentivekvstatespace2026
+
+## @blog Lab Notes
