@@ -34,3 +34,7 @@ My current research centers on **efficient video generation**, especially making
 
 - **2026 - present** · M.S. in Software Engineering, Zhejiang University
 - **2022 - 2026** · B.S. in Computer Science and Technology, Minzu University of China
+
+## @papers Selected Papers
+
+- lv2026navicache

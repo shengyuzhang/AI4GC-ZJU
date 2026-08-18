@@ -1,0 +1,18 @@
+date: May 2026
+title: NaviCache accepted to ICML 2026
+desc: >-
+  NaviCache reformulates feature caching in video diffusion models as an
+  inertial navigation problem, enabling plug-and-play, calibration-free
+  acceleration with a dual-state test-time self-calibration engine.
+featured: true
+image: /blog-assets/navicache-icml-2026/navicache-overview.webp
+imageAlt: NaviCache test-time self-calibration caching framework overview
+links:
+  - label: Blog
+    href: /blog/navicache-icml-2026
+  - label: Paper
+    href: https://arxiv.org/abs/2606.26795
+    external: true
+  - label: GitHub
+    href: https://github.com/HelloZicky/NaviCache
+    external: true
