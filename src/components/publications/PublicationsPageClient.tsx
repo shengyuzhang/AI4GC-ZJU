@@ -243,7 +243,7 @@ function SplitYearSection({
             </div>
           ) : null}
           <div className="publication-subgroup">
-            <h3 className="publication-subgroup__heading">Preprints</h3>
+            <h3 className="publication-subgroup__heading">Preprints · arXiv</h3>
             {preprints.map(render)}
           </div>
         </>
