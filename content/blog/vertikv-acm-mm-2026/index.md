@@ -5,16 +5,15 @@ authorId: yufan-xiong-2025
 desc: >-
   VertiKV preserves cross-layer token-refinement paths with vertically aligned
   eviction and top-down information enhancement, enabling efficient multimodal
-  long-context inference. Accepted to ACM MM 2026 as an Oral.
+  long-context inference. Accepted to ACM MM 2026.
 tags:
   - KV Cache Compression
   - Multimodal Long-Context
   - Efficient Inference
   - MLLMs
   - ACM MM 2026
-  - Oral
 ---
-We are happy to share that **VertiKV** has been accepted to **ACM MM 2026** as an **Oral presentation**.
+We are happy to share that **VertiKV** has been accepted to **ACM MM 2026**.
 
 Multimodal large language models must retain key and value states for long textual contexts and high-resolution visual inputs. This KV cache grows with sequence length and quickly becomes a memory and decoding bottleneck. Existing eviction methods usually score and retain tokens independently at each attention head and layer. Although locally reasonable, those decisions create irregular cross-layer sparsity: a token kept in one layer may disappear in the next, interrupting the path along which its representation is refined.
 
