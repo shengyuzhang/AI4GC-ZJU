@@ -1,6 +1,6 @@
 date: Sep 2026
-title: Agentic Visual Generation: A Survey is now available on Preprints
-titleZh: 综述《Agentic Visual Generation: A Survey》已在 Preprints 发布
+title: "Agentic Visual Generation: A Survey is now available on Preprints"
+titleZh: "综述《Agentic Visual Generation: A Survey》已在 Preprints 发布"
 type: Paper
 typeZh: 论文
 desc: >-
@@ -15,6 +15,6 @@ links:
   - label: DOI
     href: https://doi.org/10.20944/preprints202609.0173.v1
     external: true
-  - label: Project
+  - label: GitHub
     href: https://github.com/xzhxjc/Agentic-Visual-Generation-A-Survey
     external: true
