@@ -41,6 +41,7 @@ My research has centered on **efficient inference for large language models and 
 
 @bib publications
 
+- flowmmcrossmodalinformationflow2026
 - vertikvverticalintegritykv2026
 - retentivekvstatespace2026
 

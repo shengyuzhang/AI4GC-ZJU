@@ -1,0 +1,20 @@
+date: Aug 2026
+title: FlowMM accepted to EMNLP 2026 Main
+titleZh: FlowMM 被 EMNLP 2026 主会接收
+type: Paper
+typeZh: 论文
+desc: >-
+  FlowMM adapts KV-cache merging to layer-wise cross-modal information flow
+  and token sensitivity, reducing KV-cache memory by 80–95% and delivering
+  1.3–1.8× decoding speedup while preserving multimodal context performance.
+descZh: >-
+  FlowMM 根据逐层跨模态信息流与 token 敏感度自适应执行 KV 缓存合并，在保持多模态上下文任务性能的同时，
+  将 KV 缓存内存降低 80%–95%，并实现 1.3–1.8 倍解码加速。
+featured: true
+image: /blog-assets/flowmm-emnlp-2026/cover.png
+imageAlt: FlowMM framework for information-flow-guided merging and sensitivity-adaptive token matching
+links:
+  - label: Paper
+    href: https://arxiv.org/abs/2511.05534
+  - label: Blog
+    href: /blog/flowmm-emnlp-2026
