@@ -141,3 +141,26 @@ items:
         href: https://github.com/YurunChen/GUI-Anything
       - label: Project Page
         href: https://yurunchen.github.io/GUI-Anything/
+  - id: agentic-visual-generation-survey
+    name: "Agentic Visual Generation: A Survey"
+    period: 2026–present
+    periodZh: 2026 至今
+    image: agentic-visual-generation-survey.jpg
+    imageAlt: Agentic visual generation architecture with planning, tools, memory, perception, action, and self-improvement
+    imageFit: contain
+    desc: >-
+      A public survey on agentic visual generation, with the full manuscript
+      hosted on Preprints and the source repository kept in sync with the lab
+      website.
+    descZh: >-
+      公开发布的 agentic visual generation 综述，完整论文已在 Preprints
+      发布，源仓库与实验室网站保持同步。
+    tags:
+      - AIGC
+    tagsZh:
+      - AIGC
+    links:
+      - label: Preprints
+        href: https://www.preprints.org/manuscript/202609.0173/v1
+      - label: GitHub
+        href: https://github.com/xzhxjc/Agentic-Visual-Generation-A-Survey
