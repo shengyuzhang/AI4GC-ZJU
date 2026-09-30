@@ -13,6 +13,7 @@ Built for academic visitors, prospective students, collaborators, and research e
 | `/publications` | Selected publications |
 | `/team` | Team members |
 | `/blog` | Lab blog posts (Previous / Next pagination, Newest / Oldest sort) |
+| `/recruit` | Research internships on PhD-led projects |
 | `/{member-folder}` | Member profile when `profile: true` (e.g. `/shengyu-zhang`, `/yurun-chen-2025-12551024`) |
 | `/admin` | Optional content file console (disabled unless `ADMIN_ENABLED=true`) |
 

@@ -57,6 +57,13 @@ export const CONTENT_SECTIONS = [
     match: (relativePath: string) => relativePath.startsWith("team/"),
   },
   {
+    id: "recruit",
+    label: "Recruit",
+    description: "Internship page copy and PhD-led projects open for interns.",
+    root: "recruit",
+    match: (relativePath: string) => relativePath.startsWith("recruit/"),
+  },
+  {
     id: "publications",
     label: "Publications",
     description: "Global publication BibTeX used by the publications page.",

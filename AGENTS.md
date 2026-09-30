@@ -62,6 +62,9 @@ content/
     {post}/              # one folder per post
       index.md           # frontmatter + Markdown body
       cover.*            # optional local assets
+  recruit/
+    index.yaml           # /recruit page copy + default apply link
+    projects/{id}.yaml   # one PhD-led internship project per file
   team/
     {group}/{member}/    # one folder per member
       index.md           # frontmatter + optional profile body
@@ -82,6 +85,7 @@ content/
 | `/team` | `content/team/` |
 | `/blog` | `content/blog/` |
 | `/blog/{post-folder}` | blog post `index.md` body |
+| `/recruit` | `content/recruit/index.yaml` + `content/recruit/projects/*.yaml` (PhD-led internship projects; `mentors` = member folder ids) |
 | `/blog-assets/{post}/{file}` | local blog assets |
 | `/home-assets/{module}/{file}` | local homepage module assets |
 | `/{member-folder}` | member `index.md` when `profile: true` (e.g. `/shengyu-zhang`, `/yurun-chen-2025-12551024`) |
@@ -131,6 +135,7 @@ There is no `content/pages/` directory. Profile pages are the Markdown body in e
 | Profile page route + layout | `src/app/[slug]/page.tsx`, `src/components/profile/ProfilePageContent.tsx`, `src/components/profile/PiProfileHero.tsx` |
 | Venue labels (arXiv etc.) | `src/lib/publications-utils.ts`, `src/lib/content/bib-publications.ts` |
 | Team card start-date labels | `src/lib/content/constants.ts`, `src/lib/content/slug.ts` → `formatMemberStartMeta` |
+| Recruit page | `src/lib/content/load-recruit.ts`, `src/app/recruit/page.tsx`, `src/components/recruit/RecruitPageClient.tsx` |
 | Security headers | `src/lib/security/headers.ts`, `next.config.ts` |
 | Crawler policy | `src/app/robots.ts`, `src/app/layout.tsx` metadata |
 | Admin file console | `src/lib/admin/`, `src/app/admin/`, `src/app/api/admin/`, `src/middleware.ts` |

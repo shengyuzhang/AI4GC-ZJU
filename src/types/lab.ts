@@ -264,6 +264,7 @@ export type SitePages = {
   publications: PageHero;
   projects: PageHero;
   blog: PageHero;
+  recruit: PageHero;
 };
 
 export type SiteFooter = {
@@ -311,3 +312,21 @@ export type MemberProfile = {
   member: TeamMember;
   group: import("@/lib/content/team-assets").TeamContentGroup;
 };
+
+export type RecruitMentor = {
+  id: string;
+  name: string;
+  photo: string | null;
+  /** Profile href (`/{slug}`) when the member publishes a profile. */
+  href: string | null;
+  tags: string[];
+};
+
+export type RecruitProject = Omit<
+  import("@/lib/content/schema").RecruitProjectInput,
+  "mentors"
+> & {
+  mentors: RecruitMentor[];
+};
+
+export type RecruitPage = import("@/lib/content/schema").RecruitPageInput;

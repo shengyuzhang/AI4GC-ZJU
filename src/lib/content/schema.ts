@@ -387,6 +387,7 @@ export const sitePagesSchema = z.object({
   publications: pageHeroSchema.default({ title: "Publications" }),
   projects: pageHeroSchema.default({ title: "Projects" }),
   blog: pageHeroSchema.default({ title: "Blog" }),
+  recruit: pageHeroSchema.default({ title: "Join Us" }),
 });
 
 export const siteFooterSchema = z.object({
@@ -422,6 +423,7 @@ export const siteConfigSchema = z.object({
     publications: { title: "Publications" },
     projects: { title: "Projects" },
     blog: { title: "Blog" },
+    recruit: { title: "Join Us" },
   }),
   team: z.object({
     openings: z.string().nullable().default(null),
@@ -429,6 +431,58 @@ export const siteConfigSchema = z.object({
     sponsors: z.string().nullable().default(null),
   }),
 });
+
+export const recruitPageSchema = z.object({
+  intro: z.string().optional(),
+  introZh: z.string().optional(),
+  apply: linkItemSchema,
+});
+
+/** A mentor is a team member folder id, or `{ name }` for someone without a profile yet. */
+export const recruitMentorRefSchema = z.union([
+  z.string(),
+  z.object({ name: z.string(), href: z.string().optional() }),
+]);
+
+export const recruitProjectSchema = z
+  .object({
+    id: z.string(),
+    title: z.string(),
+    titleZh: z.string().optional(),
+    summary: z.string(),
+    summaryZh: z.string().optional(),
+    /** PhD mentor(s): member folder ids (e.g. `yurun-chen-2025-12551024`) or `{ name }`. */
+    mentors: z.array(recruitMentorRefSchema).min(1),
+    status: z.enum(["open", "filled"]).default("open"),
+    /** `Mon YYYY`, same format as news dates. */
+    postedAt: z.string(),
+    tags: z.array(z.string()).default([]),
+    tagsZh: z.array(z.string()).optional(),
+    duration: z.string().optional(),
+    durationZh: z.string().optional(),
+    commitment: z.string().optional(),
+    commitmentZh: z.string().optional(),
+    mode: z.string().optional(),
+    modeZh: z.string().optional(),
+    openings: z.number().int().positive().optional(),
+    tasks: z.array(z.string()).default([]),
+    tasksZh: z.array(z.string()).optional(),
+    requirements: z.array(z.string()).default([]),
+    requirementsZh: z.array(z.string()).optional(),
+    niceToHave: z.array(z.string()).default([]),
+    niceToHaveZh: z.array(z.string()).optional(),
+    links: z.array(linkItemSchema).default([]),
+    /** Per-project application link; falls back to `index.yaml` → `apply`. */
+    applyHref: z.string().optional(),
+  })
+  .refine((project) => !project.tagsZh || project.tagsZh.length === project.tags.length, {
+    message: "tagsZh must align one-to-one with tags",
+    path: ["tagsZh"],
+  });
+
+export type RecruitPageInput = z.infer<typeof recruitPageSchema>;
+export type RecruitMentorRef = z.infer<typeof recruitMentorRefSchema>;
+export type RecruitProjectInput = z.infer<typeof recruitProjectSchema>;
 
 export type NewsItemInput = z.infer<typeof newsItemSchema>;
 export type TeamMemberInput = z.infer<typeof teamMemberFrontmatterSchema>;

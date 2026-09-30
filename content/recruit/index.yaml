@@ -1,0 +1,14 @@
+# /recruit — research internships on PhD-led projects.
+# Individual projects live in content/recruit/projects/{project-id}.yaml.
+
+intro: >-
+  Each project below is designed and led by a PhD student at AI4GC Lab, who recruits interns for it
+  directly. Apply to the specific project you are interested in and mention its ID in the form.
+introZh: >-
+  以下每个项目都由 AI4GC 实验室的一位博士生策划和带领，并单独招募实习生。请申请你感兴趣的具体项目，并在表单中注明项目编号。
+
+apply:
+  label: Apply via recruiting form
+  labelZh: 填写招募表单
+  href: "https://docs.qq.com/form/page/DSmJQb0d5WkdsbmZP#/fill"
+  external: true
