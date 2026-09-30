@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import RecruitPageClient from "@/components/recruit/RecruitPageClient";
-import { getPublications } from "@/lib/content";
 import { loadRecruitPage, loadRecruitProjects } from "@/lib/content/load-recruit";
 import { buildListPageMetadata } from "@/lib/site/page-metadata";
 
@@ -13,7 +12,6 @@ export default function RecruitPage() {
     <RecruitPageClient
       page={loadRecruitPage()}
       projects={loadRecruitProjects()}
-      publicationCount={getPublications().length}
     />
   );
 }

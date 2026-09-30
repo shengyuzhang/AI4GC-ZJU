@@ -6,7 +6,7 @@ summary: >-
 summaryZh: >-
   构建自动化红队测试流程，挖掘计算机使用智能体（CUA）会如何被恶意网页、弹窗和文档诱导，并将结果整理成公开基准。
 mentors:
-  - yurun-chen-2025-12551024
+  - name: XXX
 status: open
 postedAt: Sep 2026
 tags: [Agent Safety, Benchmark]
@@ -36,8 +36,3 @@ niceToHave:
   - Experience with security CTFs or web development
 niceToHaveZh:
   - 有 CTF 或 Web 开发经验
-links:
-  - label: GUI-Anything
-    href: "https://github.com/YurunChen/GUI-Anything"
-  - label: Graph2Eval
-    href: "https://github.com/YurunChen/Graph2Eval"

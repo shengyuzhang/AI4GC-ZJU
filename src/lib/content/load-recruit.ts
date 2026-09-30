@@ -4,7 +4,11 @@ import { CONTENT_PATHS } from "@/lib/content/paths";
 import { parseNewsDateKey } from "@/lib/content/date";
 import { findTeamMemberById } from "@/lib/content/load-team";
 import { readYamlFile } from "@/lib/content/read-yaml";
-import { recruitPageSchema, recruitProjectSchema } from "@/lib/content/schema";
+import {
+  recruitPageSchema,
+  recruitProjectSchema,
+  type RecruitMentorRef,
+} from "@/lib/content/schema";
 import type { RecruitMentor, RecruitPage, RecruitProject } from "@/types/lab";
 
 const PROJECT_FILE_PATTERN = /\.ya?ml$/i;
@@ -13,7 +17,11 @@ export function loadRecruitPage(): RecruitPage {
   return recruitPageSchema.parse(readYamlFile(CONTENT_PATHS.recruitPage));
 }
 
-function resolveMentor(id: string, projectId: string): RecruitMentor {
+function resolveMentor(ref: RecruitMentorRef, projectId: string): RecruitMentor {
+  if (typeof ref !== "string") {
+    return { id: `name:${ref.name}`, name: ref.name, photo: null, href: ref.href ?? null, tags: [] };
+  }
+  const id = ref;
   const member = findTeamMemberById(id);
   if (!member) {
     throw new Error(`Recruit project "${projectId}": unknown mentor id "${id}"`);
@@ -42,7 +50,7 @@ export function loadRecruitProjects(): RecruitProject[] {
       const parsed = recruitProjectSchema.parse({ id, ...raw });
       return {
         ...parsed,
-        mentors: parsed.mentors.map((mentorId) => resolveMentor(mentorId, id)),
+        mentors: parsed.mentors.map((ref) => resolveMentor(ref, id)),
       };
     });
 

@@ -694,14 +694,14 @@ BibTeX 字段与 `/publications` 相同（`url`/`doi` → Paper 芯片，`github
 
 `/recruit`（导航 Join Us / 加入我们）展示由博士生策划、单独招募实习生的项目。
 
-- `index.yaml`：页面文案——`hero`（`kicker`/`title`/`subtitle`）、`steps`（流程，`title`/`desc`）、`benefits`（`title`/`desc`/`icon`，icon 取 `mentor`/`paper`/`compute`/`path`）、`faq`（`q`/`a`）、`apply`（`LinkItem` + `note`，默认申请链接）。所有字段都可加 `…Zh` 中文版本。
+- `index.yaml`：`intro`/`introZh`（列表上方的一段说明，可省略）；`apply`（`LinkItem`，默认申请链接）。
 - `projects/{project-id}.yaml`：每个项目一个文件，文件名即项目编号（页面上显示为 `#project-id`，申请者在表单里填写它）。
 
 | 字段 | 类型 | 必填 | 说明 |
 | --- | --- | --- | --- |
 | `title` / `titleZh` | string | 是 | 项目名 |
 | `summary` / `summaryZh` | string | 是 | 一两句话的项目介绍 |
-| `mentors` | string[] | 是 | 带队博士生的成员文件夹名（如 `yurun-chen-2025-12551024`），自动取头像、姓名并链接个人页；写错会构建失败 |
+| `mentors` | 数组 | 是 | 带队博士生。推荐写成员文件夹名（如 `yurun-chen-2025-12551024`），自动取头像、姓名并链接个人页，写错会构建失败；还没有成员页时可写 `- name: 姓名`（可加 `href`） |
 | `status` | `open` / `filled` | 否 | 默认 `open`；`filled` 显示为「已招满」并排到最后 |
 | `postedAt` | string | 是 | `Mon YYYY`，开放项目内按此降序 |
 | `tags` / `tagsZh` | string[] | 否 | 主题标签，用于筛选；`tagsZh` 必须与 `tags` 一一对应 |

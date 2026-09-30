@@ -1,41 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Check,
-  ChevronDown,
-  Clock,
-  Compass,
-  Cpu,
-  FileText,
-  Hourglass,
-  MapPin,
-  UserRound,
-  type LucideIcon,
-} from "lucide-react";
+import { ArrowUpRight, Check, ChevronDown, Clock, Hourglass, MapPin, type LucideIcon } from "lucide-react";
 import { useMemo, useState } from "react";
-import HomeReveal from "@/components/home/HomeReveal";
+import ContentSection from "@/components/layout/ContentSection";
 import MemberAvatar from "@/components/site/MemberAvatar";
 import { newsDateTimeAttr } from "@/lib/content/date";
 import { pick, useLang, type Lang } from "@/lib/i18n/language-context";
 import { cn } from "@/lib/utils";
-import type { RecruitMentor, RecruitPage, RecruitProject } from "@/types/lab";
+import type { RecruitPage, RecruitProject } from "@/types/lab";
 
 const ALL_FILTER = "all";
-
-const BENEFIT_ICONS: Record<string, LucideIcon> = {
-  mentor: UserRound,
-  paper: FileText,
-  compute: Cpu,
-  path: Compass,
-};
 
 type RecruitPageClientProps = {
   page: RecruitPage;
   projects: RecruitProject[];
-  publicationCount: number;
 };
 
 /** Localized list: the `*Zh` array when in 中文 mode and non-empty, else English. */
@@ -43,27 +22,9 @@ function pickList(lang: Lang, en: string[], zh?: string[]): string[] {
   return lang === "zh" && zh && zh.length > 0 ? zh : en;
 }
 
-function uniqueMentors(projects: RecruitProject[]): RecruitMentor[] {
-  const seen = new Map<string, RecruitMentor>();
-  for (const project of projects) {
-    for (const mentor of project.mentors) {
-      seen.set(mentor.id, mentor);
-    }
-  }
-  return Array.from(seen.values());
-}
-
-export default function RecruitPageClient({
-  page,
-  projects,
-  publicationCount,
-}: RecruitPageClientProps) {
+export default function RecruitPageClient({ page, projects }: RecruitPageClientProps) {
   const { lang } = useLang();
   const [activeTag, setActiveTag] = useState<string>(ALL_FILTER);
-
-  const openProjects = projects.filter((project) => project.status === "open");
-  const mentors = useMemo(() => uniqueMentors(openProjects), [openProjects]);
-  const openSeats = openProjects.reduce((sum, project) => sum + (project.openings ?? 1), 0);
 
   // English tags are the stable filter keys; labels swap via aligned tagsZh.
   const tagOptions = useMemo(() => {
@@ -90,221 +51,60 @@ export default function RecruitPageClient({
   const applyLabel = pick(lang, page.apply.label, page.apply.labelZh);
 
   return (
-    <main className="recruit">
-      <section className="recruit-hero">
-        <div className="recruit-hero__glow" aria-hidden="true" />
-        <div className="site-container recruit-hero__inner">
-          <div className="recruit-hero__main">
-            {page.hero.kicker ? (
-              <p className="recruit-hero__kicker">
-                <span className="recruit-live-dot" aria-hidden="true" />
-                {pick(lang, page.hero.kicker, page.hero.kickerZh)}
-              </p>
-            ) : null}
-            <h1 className="recruit-hero__title">{pick(lang, page.hero.title, page.hero.titleZh)}</h1>
-            {page.hero.subtitle ? (
-              <p className="recruit-hero__subtitle">
-                {pick(lang, page.hero.subtitle, page.hero.subtitleZh)}
-              </p>
-            ) : null}
-            <div className="recruit-hero__actions">
-              <a href="#open-projects" className="recruit-btn recruit-btn--primary">
-                {pick(lang, "Browse open projects", "查看开放项目")}
-                <ArrowRight aria-hidden="true" size={16} />
-              </a>
-              <a href="#how-it-works" className="recruit-btn recruit-btn--ghost">
-                {pick(lang, "How it works", "了解流程")}
-              </a>
+    <main>
+      <ContentSection className="section-page-body">
+        <header className="recruit-head">
+          <p className="recruit-eyebrow">{pick(lang, "Open projects", "开放项目")}</p>
+          <h1 className="recruit-title">
+            {pick(lang, "Pick the project you want to build", "挑一个你想做的项目")}
+          </h1>
+          {page.intro ? (
+            <p className="recruit-intro">{pick(lang, page.intro, page.introZh)}</p>
+          ) : null}
+          {projects.length > 1 && tagOptions.length > 1 ? (
+            <div
+              className="recruit-filter"
+              role="group"
+              aria-label={pick(lang, "Filter projects by topic", "按主题筛选项目")}
+            >
+              {[{ value: ALL_FILTER, label: pick(lang, "All", "全部") }, ...tagOptions].map(
+                (option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    className="recruit-filter__chip"
+                    aria-pressed={effectiveTag === option.value}
+                    onClick={() => setActiveTag(option.value)}
+                  >
+                    {option.label}
+                  </button>
+                ),
+              )}
             </div>
-          </div>
+          ) : null}
+        </header>
 
-          <aside className="recruit-hero__panel" aria-label={pick(lang, "At a glance", "概览")}>
-            <dl className="recruit-stats">
-              <div className="recruit-stat">
-                <dt>{pick(lang, "Open projects", "开放项目")}</dt>
-                <dd>{openProjects.length}</dd>
-              </div>
-              <div className="recruit-stat">
-                <dt>{pick(lang, "Intern seats", "实习名额")}</dt>
-                <dd>{openSeats}</dd>
-              </div>
-              <div className="recruit-stat">
-                <dt>{pick(lang, "Lab publications", "实验室论文")}</dt>
-                <dd>{publicationCount}+</dd>
-              </div>
-            </dl>
-            {mentors.length > 0 ? (
-              <div className="recruit-hero__mentors">
-                <p className="recruit-hero__mentors-label">
-                  {pick(lang, "Mentored by our PhD students", "由实验室博士生带队")}
-                </p>
-                <ul className="recruit-avatar-stack">
-                  {mentors.map((mentor) => (
-                    <li key={mentor.id} title={mentor.name}>
-                      <MemberAvatar src={mentor.photo} name={mentor.name} size="sm" />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
-          </aside>
-        </div>
-      </section>
-
-      {page.steps.length > 0 ? (
-        <section className="recruit-section" id="how-it-works">
-          <div className="site-container">
-            <HomeReveal>
-              <header className="recruit-section__head">
-                <p className="recruit-eyebrow">{pick(lang, "How it works", "如何运作")}</p>
-                <h2 className="recruit-section__title">
-                  {pick(lang, "One PhD student. One project. You.", "一位博士生，一个项目，还有你。")}
-                </h2>
-              </header>
-            </HomeReveal>
-            <ol className="recruit-steps">
-              {page.steps.map((step, index) => (
-                <li key={step.title} className="recruit-step">
-                  <HomeReveal delay={index * 0.06}>
-                    <span className="recruit-step__index">{String(index + 1).padStart(2, "0")}</span>
-                    <h3 className="recruit-step__title">{pick(lang, step.title, step.titleZh)}</h3>
-                    <p className="recruit-step__desc">{pick(lang, step.desc, step.descZh)}</p>
-                  </HomeReveal>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-      ) : null}
-
-      {page.benefits.length > 0 ? (
-        <section className="recruit-section recruit-section--soft">
-          <div className="site-container">
-            <HomeReveal>
-              <header className="recruit-section__head">
-                <p className="recruit-eyebrow">{pick(lang, "Why intern with us", "为什么加入")}</p>
-                <h2 className="recruit-section__title">
-                  {pick(lang, "Research experience that actually counts", "真正算数的科研经历")}
-                </h2>
-              </header>
-            </HomeReveal>
-            <ul className="recruit-benefits">
-              {page.benefits.map((benefit, index) => {
-                const Icon = BENEFIT_ICONS[benefit.icon ?? ""] ?? Check;
-                return (
-                  <li key={benefit.title}>
-                    <HomeReveal delay={index * 0.06} className="recruit-benefit">
-                      <span className="recruit-benefit__icon" aria-hidden="true">
-                        <Icon size={20} strokeWidth={1.8} />
-                      </span>
-                      <h3 className="recruit-benefit__title">
-                        {pick(lang, benefit.title, benefit.titleZh)}
-                      </h3>
-                      <p className="recruit-benefit__desc">{pick(lang, benefit.desc, benefit.descZh)}</p>
-                    </HomeReveal>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </section>
-      ) : null}
-
-      <section className="recruit-section" id="open-projects">
-        <div className="site-container">
-          <HomeReveal>
-            <header className="recruit-section__head">
-              <p className="recruit-eyebrow">{pick(lang, "Open projects", "开放项目")}</p>
-              <h2 className="recruit-section__title">
-                {pick(lang, "Pick the project you want to build", "挑一个你想做的项目")}
-              </h2>
-              {tagOptions.length > 1 ? (
-                <div
-                  className="recruit-filter"
-                  role="group"
-                  aria-label={pick(lang, "Filter projects by topic", "按主题筛选项目")}
-                >
-                  {[{ value: ALL_FILTER, label: pick(lang, "All", "全部") }, ...tagOptions].map(
-                    (option) => (
-                      <button
-                        key={option.value}
-                        type="button"
-                        className="recruit-filter__chip"
-                        aria-pressed={effectiveTag === option.value}
-                        onClick={() => setActiveTag(option.value)}
-                      >
-                        {option.label}
-                      </button>
-                    ),
-                  )}
-                </div>
-              ) : null}
-            </header>
-          </HomeReveal>
-
-          {filtered.length > 0 ? (
-            <ul className="recruit-projects">
-              {filtered.map((project) => (
-                <li key={project.id} id={project.id}>
-                  <RecruitProjectCard
-                    project={project}
-                    lang={lang}
-                    applyHref={project.applyHref ?? page.apply.href}
-                    applyLabel={applyLabel}
-                  />
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="recruit-empty">
-              {pick(lang, "No projects match this filter.", "没有符合该筛选条件的项目。")}
-            </p>
-          )}
-        </div>
-      </section>
-
-      {page.faq.length > 0 ? (
-        <section className="recruit-section recruit-section--soft">
-          <div className="site-container recruit-faq-layout">
-            <header className="recruit-section__head">
-              <p className="recruit-eyebrow">FAQ</p>
-              <h2 className="recruit-section__title">{pick(lang, "Good questions", "常见问题")}</h2>
-            </header>
-            <div className="recruit-faq">
-              {page.faq.map((item) => (
-                <details key={item.q} className="recruit-faq__item">
-                  <summary>
-                    <span>{pick(lang, item.q, item.qZh)}</span>
-                    <ChevronDown aria-hidden="true" size={18} className="recruit-faq__chevron" />
-                  </summary>
-                  <p>{pick(lang, item.a, item.aZh)}</p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-      ) : null}
-
-      <section className="recruit-cta">
-        <div className="site-container recruit-cta__inner">
-          <div>
-            <h2 className="recruit-cta__title">
-              {pick(lang, "Ready to build something real?", "准备好做点真东西了吗？")}
-            </h2>
-            {page.apply.note ? (
-              <p className="recruit-cta__note">{pick(lang, page.apply.note, page.apply.noteZh)}</p>
-            ) : null}
-          </div>
-          <a
-            href={page.apply.href}
-            className="recruit-btn recruit-btn--primary recruit-btn--lg"
-            {...(page.apply.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-          >
-            {applyLabel}
-            <ArrowUpRight aria-hidden="true" size={18} />
-          </a>
-        </div>
-      </section>
+        {filtered.length > 0 ? (
+          <ul className="recruit-projects">
+            {filtered.map((project) => (
+              <li key={project.id} id={project.id}>
+                <RecruitProjectCard
+                  project={project}
+                  lang={lang}
+                  applyHref={project.applyHref ?? page.apply.href}
+                  applyLabel={applyLabel}
+                />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="recruit-empty">
+            {projects.length === 0
+              ? pick(lang, "No open projects at the moment.", "目前暂无开放项目。")
+              : pick(lang, "No projects match this filter.", "没有符合该筛选条件的项目。")}
+          </p>
+        )}
+      </ContentSection>
     </main>
   );
 }
@@ -449,7 +249,7 @@ function RecruitProjectCard({ project, lang, applyHref, applyLabel }: RecruitPro
         {isOpen ? (
           <a
             href={applyHref}
-            className="recruit-btn recruit-btn--primary recruit-btn--sm"
+            className="recruit-btn"
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`${applyLabel} — ${project.title}`}

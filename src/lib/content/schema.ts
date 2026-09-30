@@ -432,46 +432,17 @@ export const siteConfigSchema = z.object({
   }),
 });
 
-const localizedTextSchema = {
-  title: z.string(),
-  titleZh: z.string().optional(),
-  desc: z.string(),
-  descZh: z.string().optional(),
-};
-
 export const recruitPageSchema = z.object({
-  hero: z.object({
-    kicker: z.string().optional(),
-    kickerZh: z.string().optional(),
-    title: z.string(),
-    titleZh: z.string().optional(),
-    subtitle: z.string().optional(),
-    subtitleZh: z.string().optional(),
-  }),
-  steps: z.array(z.object(localizedTextSchema)).default([]),
-  benefits: z
-    .array(
-      z.object({
-        ...localizedTextSchema,
-        icon: z.enum(["mentor", "paper", "compute", "path"]).optional(),
-      }),
-    )
-    .default([]),
-  faq: z
-    .array(
-      z.object({
-        q: z.string(),
-        qZh: z.string().optional(),
-        a: z.string(),
-        aZh: z.string().optional(),
-      }),
-    )
-    .default([]),
-  apply: linkItemSchema.extend({
-    note: z.string().optional(),
-    noteZh: z.string().optional(),
-  }),
+  intro: z.string().optional(),
+  introZh: z.string().optional(),
+  apply: linkItemSchema,
 });
+
+/** A mentor is a team member folder id, or `{ name }` for someone without a profile yet. */
+export const recruitMentorRefSchema = z.union([
+  z.string(),
+  z.object({ name: z.string(), href: z.string().optional() }),
+]);
 
 export const recruitProjectSchema = z
   .object({
@@ -480,8 +451,8 @@ export const recruitProjectSchema = z
     titleZh: z.string().optional(),
     summary: z.string(),
     summaryZh: z.string().optional(),
-    /** Member folder ids (e.g. `yurun-chen-2025-12551024`) of the PhD mentor(s). */
-    mentors: z.array(z.string()).min(1),
+    /** PhD mentor(s): member folder ids (e.g. `yurun-chen-2025-12551024`) or `{ name }`. */
+    mentors: z.array(recruitMentorRefSchema).min(1),
     status: z.enum(["open", "filled"]).default("open"),
     /** `Mon YYYY`, same format as news dates. */
     postedAt: z.string(),
@@ -510,6 +481,7 @@ export const recruitProjectSchema = z
   });
 
 export type RecruitPageInput = z.infer<typeof recruitPageSchema>;
+export type RecruitMentorRef = z.infer<typeof recruitMentorRefSchema>;
 export type RecruitProjectInput = z.infer<typeof recruitProjectSchema>;
 
 export type NewsItemInput = z.infer<typeof newsItemSchema>;
