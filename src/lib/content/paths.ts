@@ -12,6 +12,8 @@ export const CONTENT_PATHS = {
   teamDir: path.join(CONTENT_DIR, "team"),
   newsDir: path.join(CONTENT_DIR, "news"),
   blogDir: path.join(CONTENT_DIR, "blog"),
+  recruitPage: path.join(CONTENT_DIR, "recruit", "index.yaml"),
+  recruitProjectsDir: path.join(CONTENT_DIR, "recruit", "projects"),
   publicationsBib: path.join(CONTENT_DIR, "publications.bib"),
 } as const;
 

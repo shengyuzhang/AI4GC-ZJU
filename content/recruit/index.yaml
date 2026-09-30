@@ -1,0 +1,89 @@
+# /recruit — research internship page copy.
+# Individual PhD-led projects live in content/recruit/projects/{project-id}.yaml.
+# Every English field has an optional *Zh counterpart shown in 中文 mode.
+
+hero:
+  kicker: Research Internships · 2026–27
+  kickerZh: 科研实习招募 · 2026–27
+  title: Build frontier AI with a PhD mentor, one project at a time.
+  titleZh: 跟着博士生，做一个真正的前沿 AI 项目。
+  subtitle: >-
+    Every internship at AI4GC Lab is attached to a concrete project designed and led by one of
+    our PhD students. You join a small team, own a real piece of the research, and grow into a
+    co-author on work aimed at top venues.
+  subtitleZh: >-
+    AI4GC 实验室的每个实习岗位都对应一个由博士生策划和带领的具体项目。你会加入一个小团队，
+    负责研究中真实的一部分，并以共同作者的身份参与冲击顶会的工作。
+
+steps:
+  - title: A PhD student proposes a project
+    titleZh: 博士生策划项目
+    desc: Each project starts from a PhD student's research agenda, scoped to be finishable in 3–6 months.
+    descZh: 每个项目都来自博士生自己的研究方向，范围控制在 3–6 个月内可以完成。
+  - title: You pick the project you care about
+    titleZh: 你挑选感兴趣的项目
+    desc: Apply to a specific project, not a generic pool — you know exactly who you'll work with and on what.
+    descZh: 直接申请具体项目，而不是投进一个笼统的简历池——你清楚知道会和谁一起、做什么。
+  - title: A short chat with your mentor
+    titleZh: 和导师聊一聊
+    desc: A 30-minute conversation about the project and your background, sometimes with a small warm-up task.
+    descZh: 约 30 分钟的交流，聊项目和你的背景，有时会附带一个小的热身任务。
+  - title: Build, write, and publish together
+    titleZh: 一起做实验、写论文、发表
+    desc: Weekly 1:1s with your PhD mentor, lab group meetings, and a clear path to co-authorship.
+    descZh: 每周与博士导师一对一沟通，参加组会，并有明确的共同署名路径。
+
+benefits:
+  - icon: mentor
+    title: 1:1 PhD mentorship
+    titleZh: 博士生一对一指导
+    desc: A dedicated mentor who designed the project and meets with you every week.
+    descZh: 项目的设计者就是你的导师，每周与你一对一沟通。
+  - icon: paper
+    title: Real papers, real credit
+    titleZh: 真实论文，真实署名
+    desc: Projects target venues like NeurIPS, ICLR, ACL, CVPR and ACM MM — contributors are co-authors.
+    descZh: 项目瞄准 NeurIPS、ICLR、ACL、CVPR、ACM MM 等会议，有实质贡献即署名。
+  - icon: compute
+    title: Compute & infrastructure
+    titleZh: 算力与基础设施
+    desc: Access to the lab's GPU cluster and tooling, so you spend time on ideas rather than setup.
+    descZh: 使用实验室 GPU 集群与工具链，把时间花在想法上而不是环境上。
+  - icon: path
+    title: A path forward
+    titleZh: 通往下一步
+    desc: Strong interns receive recommendation letters and priority consideration for master's / PhD positions.
+    descZh: 表现优秀的实习生可获得推荐信，并在硕士 / 博士招生中优先考虑。
+
+faq:
+  - q: Who can apply?
+    qZh: 谁可以申请？
+    a: >-
+      Undergraduate and master's students from Zhejiang University or other universities. What matters most is
+      solid coding skills, curiosity, and enough time to commit — not your year or major.
+    aZh: >-
+      浙江大学及其他高校的本科生、硕士生都可以申请。最看重的是扎实的编程能力、好奇心和足够的投入时间，而不是年级或专业。
+  - q: How much time do I need to commit?
+    qZh: 需要投入多少时间？
+    a: >-
+      Each project lists its expected commitment, typically 15–25 hours per week for at least 3 months.
+      Remote collaboration is possible for most projects.
+    aZh: 每个项目会写明预期投入，通常为每周 15–25 小时、至少 3 个月。大多数项目支持远程协作。
+  - q: Can I apply to more than one project?
+    qZh: 可以同时申请多个项目吗？
+    a: Yes, up to two. Rank them in the form so mentors can coordinate.
+    aZh: 可以，最多两个。请在表单中写明优先顺序，方便导师之间协调。
+  - q: What if no project fits me right now?
+    qZh: 暂时没有合适的项目怎么办？
+    a: >-
+      New projects are posted every term. You can still submit the general recruiting form and we will reach out
+      when a matching project opens.
+    aZh: 每学期都会发布新项目。你也可以先提交通用招募表单，有匹配的项目时我们会联系你。
+
+apply:
+  label: Apply via recruiting form
+  labelZh: 填写招募表单
+  href: "https://docs.qq.com/form/page/DSmJQb0d5WkdsbmZP#/fill"
+  external: true
+  note: Mention the project ID(s) you're applying for. Incomplete applications are not replied.
+  noteZh: 请在表单中注明申请的项目编号。信息不完整的申请将不予回复。

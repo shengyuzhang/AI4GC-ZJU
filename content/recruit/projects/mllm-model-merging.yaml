@@ -1,0 +1,29 @@
+title: Merging Multimodal LLMs Without Retraining
+titleZh: 免训练的多模态大模型融合
+summary: >-
+  Combine specialist vision-language models into one generalist by merging their weights —
+  no extra training — and understand when and why it works.
+summaryZh: 通过权重融合把多个专长的视觉语言模型合成一个通才模型——无需额外训练——并弄清它何时、为何有效。
+mentors:
+  - xinchen-xu-2025-12551022
+status: filled
+postedAt: Jun 2026
+tags: [Multimodal LLM, Model Merging]
+tagsZh: [多模态大模型, 模型融合]
+duration: 4 months
+durationZh: 4 个月
+commitment: 20 h / week
+commitmentZh: 每周 20 小时
+mode: Hybrid
+modeZh: 线上线下结合
+openings: 1
+tasks:
+  - Benchmark existing merging methods on MLLM task suites
+  - Analyse parameter interference across vision and language modules
+tasksZh:
+  - 在 MLLM 任务集上系统评测现有融合方法
+  - 分析视觉与语言模块之间的参数干扰
+requirements:
+  - PyTorch; familiarity with Hugging Face Transformers
+requirementsZh:
+  - 熟悉 PyTorch 与 Hugging Face Transformers

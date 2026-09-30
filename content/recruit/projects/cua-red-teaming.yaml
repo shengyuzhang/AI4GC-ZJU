@@ -1,0 +1,43 @@
+title: Red-Teaming Computer-Using Agents
+titleZh: 计算机使用智能体的红队测试
+summary: >-
+  Build an automated red-teaming pipeline that discovers how computer-using agents can be tricked by
+  malicious web pages, pop-ups, and documents — then turn the findings into a public benchmark.
+summaryZh: >-
+  构建自动化红队测试流程，挖掘计算机使用智能体（CUA）会如何被恶意网页、弹窗和文档诱导，并将结果整理成公开基准。
+mentors:
+  - yurun-chen-2025-12551024
+status: open
+postedAt: Sep 2026
+tags: [Agent Safety, Benchmark]
+tagsZh: [智能体安全, 基准测试]
+duration: 4–6 months
+durationZh: 4–6 个月
+commitment: 20 h / week
+commitmentZh: 每周 20 小时
+mode: Hybrid
+modeZh: 线上线下结合
+openings: 2
+tasks:
+  - Design attack scenarios across browsers, desktop apps, and documents
+  - Implement an attacker agent that generates and mutates adversarial environments
+  - Run large-scale evaluations on open and commercial CUAs
+tasksZh:
+  - 设计覆盖浏览器、桌面应用和文档的攻击场景
+  - 实现能生成并变异对抗环境的攻击智能体
+  - 在开源与商用 CUA 上开展大规模评测
+requirements:
+  - Strong Python; comfortable with Playwright or Selenium
+  - Curiosity about how LLM agents fail
+requirementsZh:
+  - 扎实的 Python 能力，熟悉 Playwright 或 Selenium
+  - 对 LLM 智能体如何「失灵」有好奇心
+niceToHave:
+  - Experience with security CTFs or web development
+niceToHaveZh:
+  - 有 CTF 或 Web 开发经验
+links:
+  - label: GUI-Anything
+    href: "https://github.com/YurunChen/GUI-Anything"
+  - label: Graph2Eval
+    href: "https://github.com/YurunChen/Graph2Eval"

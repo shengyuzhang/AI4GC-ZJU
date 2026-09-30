@@ -46,6 +46,9 @@ nav:
   - label: Team
     labelZh: 团队
     href: /team
+  - label: Join Us
+    labelZh: 加入我们
+    href: /recruit
 
 footer:
   credit: Designed and Developed by Yurun Chen.
@@ -71,6 +74,8 @@ pages:
     title: Publications
   projects:
     title: Projects
+  recruit:
+    title: Join Us
 
 team:
   openings: >-
